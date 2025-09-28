@@ -1,0 +1,91 @@
+
+import React, { useState } from 'react';
+import { Quest } from '@/types/index';
+import { VIETNAMESE } from '@/constants';
+import Button from '../ui/Button';
+
+interface QuestsDisplayPanelProps {
+  quests: Quest[];
+  onQuestClick: (quest: Quest) => void;
+  onQuestEditClick: (quest: Quest) => void;
+}
+
+const QuestsDisplayPanel: React.FC<QuestsDisplayPanelProps> = React.memo(({ quests, onQuestClick, onQuestEditClick }) => {
+  const [activeTab, setActiveTab] = useState<'active' | 'completed' | 'failed'>('active');
+  const filteredQuests = quests.filter(q => q.status === activeTab);
+
+  const renderQuestList = (questsToRender: Quest[]) => {
+    if (questsToRender.length === 0) {
+      let message = VIETNAMESE.noActiveQuests;
+      if (activeTab === 'completed') message = VIETNAMESE.noCompletedQuests;
+      if (activeTab === 'failed') message = VIETNAMESE.noFailedQuests;
+      return <p className="text-gray-400 italic p-2 text-sm">{message}</p>;
+    }
+    return (
+      <ul className="space-y-1 p-1">
+        {questsToRender.map(quest => (
+          <li
+            key={quest.id}
+            className="text-sm text-gray-300 hover:bg-gray-700 p-2 rounded transition-colors flex justify-between items-center group"
+          >
+            <div
+                className="flex-grow cursor-pointer"
+                onClick={() => onQuestClick(quest)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && onQuestClick(quest)}
+                aria-label={`Details for quest ${quest.title}`}
+                title={quest.title}
+            >
+                <span className="truncate block">
+                    <strong className="text-indigo-300">{quest.title}</strong>
+                </span>
+            </div>
+             <Button
+                variant="ghost"
+                size="sm"
+                className="!p-1.5 ml-2 flex-shrink-0 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onQuestEditClick(quest);
+                }}
+                title={`Chỉnh sửa ${quest.title}`}
+                aria-label={`Chỉnh sửa ${quest.title}`}
+            >
+                ✏️
+            </Button>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  return (
+    <div className="h-full flex flex-col">
+      <div className="flex border-b border-gray-700 mb-2" role="tablist" aria-label="Quest Status">
+        {(['active', 'completed', 'failed'] as const).map(tab => (
+          <button
+            key={tab}
+            id={`quest-tab-${tab}`}
+            role="tab"
+            aria-controls="quest-panel"
+            aria-selected={activeTab === tab}
+            className={`py-2 px-3 sm:px-4 text-xs sm:text-sm font-medium flex-1 ${
+              activeTab === tab
+                ? 'border-b-2 border-indigo-500 text-indigo-400'
+                : 'text-gray-400 hover:text-indigo-300'
+            }`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab === 'active' ? VIETNAMESE.activeQuestsTab : tab === 'completed' ? VIETNAMESE.completedQuestsTab : VIETNAMESE.failedQuestsTab}
+          </button>
+        ))}
+      </div>
+      <div id="quest-panel" role="tabpanel" tabIndex={0} aria-labelledby={`quest-tab-${activeTab}`} className="flex-grow overflow-y-auto custom-scrollbar">
+        {renderQuestList(filteredQuests)}
+      </div>
+    </div>
+  );
+});
+
+export default QuestsDisplayPanel;

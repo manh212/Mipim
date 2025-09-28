@@ -1,0 +1,191 @@
+import React, { useState, useEffect, ChangeEvent } from 'react';
+import { StyleSettings, StyleSettingProperty } from '@/types/index';
+import Button from './ui/Button';
+import Modal from './ui/Modal'; 
+import { VIETNAMESE, AVAILABLE_FONTS, AVAILABLE_FONT_SIZES, DEFAULT_STYLE_SETTINGS } from '@/constants/index';
+import InputField from './ui/InputField';
+
+interface StyleSettingsModalProps {
+  initialSettings: StyleSettings;
+  onSave: (newSettings: StyleSettings) => void;
+  onClose: () => void;
+}
+
+const StyleSettingsModal: React.FC<StyleSettingsModalProps> = ({ initialSettings, onSave, onClose }) => {
+  const [currentStyles, setCurrentStyles] = useState<StyleSettings>(initialSettings);
+
+  useEffect(() => {
+    setCurrentStyles(initialSettings);
+  }, [initialSettings]);
+
+  const handleStyleChange = (
+    section: Exclude<keyof StyleSettings, 'enableKeywordHighlighting'>,
+    property: keyof StyleSettingProperty,
+    value: string
+  ) => {
+    setCurrentStyles(prev => ({
+      ...prev,
+      [section]: {
+        ...(prev[section] as StyleSettingProperty),
+        [property]: value === 'inherit' || value === '' ? undefined : value,
+      },
+    }));
+  };
+
+  const handleToggleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setCurrentStyles(prev => ({
+        ...prev,
+        [name]: checked,
+    }));
+  };
+
+
+  const handleResetSection = (section: keyof StyleSettings) => {
+    setCurrentStyles(prev => ({
+      ...prev,
+      // FIX: Explicitly cast symbol key to string to prevent runtime error
+      [section]: DEFAULT_STYLE_SETTINGS[section as keyof typeof DEFAULT_STYLE_SETTINGS],
+    }));
+  };
+  
+  const handleResetAll = () => {
+    setCurrentStyles(DEFAULT_STYLE_SETTINGS);
+  };
+
+  const handleApply = () => {
+    onSave(currentStyles);
+  };
+
+  const renderStyleSection = (sectionKey: Exclude<keyof StyleSettings, 'enableKeywordHighlighting'>, sectionLabel: string) => {
+    const sectionStyles = currentStyles[sectionKey] as StyleSettingProperty;
+    const isKeywordSection = sectionKey === 'keywordHighlight';
+    const isDialogueSection = sectionKey === 'dialogueHighlight';
+
+    return (
+      <fieldset className="border border-gray-700 p-4 rounded-md bg-gray-800/30">
+        <legend className="text-lg font-semibold text-indigo-300 px-2 flex justify-between items-center w-full">
+          <span>{sectionLabel}</span>
+          <Button 
+            type="button" 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => handleResetSection(sectionKey)}
+            className="text-xs text-amber-400 hover:text-amber-300 border-amber-500"
+          >
+            Khôi phục mục này
+          </Button>
+        </legend>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+          {/* Font family and size only if not keyword or dialogue section */}
+          {(!isKeywordSection && !isDialogueSection) && ( 
+            <>
+              <div>
+                <label htmlFor={`${String(sectionKey)}-fontFamily`} className="block text-sm font-medium text-gray-300 mb-1">{VIETNAMESE.fontFamilyLabel}</label>
+                <select
+                  id={`${String(sectionKey)}-fontFamily`}
+                  value={(sectionStyles as any).fontFamily || 'inherit'}
+                  onChange={(e) => handleStyleChange(sectionKey, 'fontFamily', e.target.value)}
+                  className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                >
+                  {AVAILABLE_FONTS.map(font => <option key={font} value={font}>{font === 'inherit' ? 'Kế thừa' : font}</option>)}
+                </select>
+              </div>
+              <div>
+                <label htmlFor={`${String(sectionKey)}-fontSize`} className="block text-sm font-medium text-gray-300 mb-1">{VIETNAMESE.fontSizeLabel}</label>
+                <select
+                  id={`${String(sectionKey)}-fontSize`}
+                  value={(sectionStyles as any).fontSize || 'inherit'}
+                  onChange={(e) => handleStyleChange(sectionKey, 'fontSize', e.target.value)}
+                  className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                >
+                  {AVAILABLE_FONT_SIZES.map(size => <option key={size} value={size}>{size === 'inherit' ? 'Kế thừa' : size}</option>)}
+                </select>
+              </div>
+            </>
+          )}
+          <div>
+            <label htmlFor={`${String(sectionKey)}-textColor`} className="block text-sm font-medium text-gray-300 mb-1">{VIETNAMESE.textColorLabel}</label>
+            <input
+              type="color"
+              id={`${String(sectionKey)}-textColor`}
+              value={(sectionStyles as any).textColor} 
+              onChange={(e) => handleStyleChange(sectionKey, 'textColor', e.target.value)}
+              className="w-full h-10 p-1 bg-gray-700 border border-gray-600 rounded-md cursor-pointer"
+            />
+          </div>
+          {/* Background color only if not keyword or dialogue section */}
+          {(!isKeywordSection && !isDialogueSection) && ( 
+            <div>
+              <label htmlFor={`${String(sectionKey)}-backgroundColor`} className="block text-sm font-medium text-gray-300 mb-1">{VIETNAMESE.backgroundColorLabel}</label>
+              <input
+                type="color"
+                id={`${String(sectionKey)}-backgroundColor`}
+                value={(sectionStyles as any).backgroundColor || '#000000'} // Default to black if undefined for picker
+                onChange={(e) => handleStyleChange(sectionKey, 'backgroundColor', e.target.value)}
+                className="w-full h-10 p-1 bg-gray-700 border border-gray-600 rounded-md cursor-pointer"
+              />
+            </div>
+          )}
+        </div>
+      </fieldset>
+    );
+  };
+
+  return (
+    <Modal isOpen={true} onClose={onClose} title={VIETNAMESE.displaySettingsTitle}>
+      <div className="space-y-4 max-h-[60vh] overflow-y-auto custom-scrollbar pr-2">
+        <fieldset className="border border-gray-700 p-4 rounded-md mb-4 bg-gray-800/30">
+            <legend className="text-lg font-semibold text-indigo-300 px-2">Cài Đặt Chung</legend>
+            <div className="mt-3">
+                <InputField
+                    label="Bật tô sáng & click từ khóa"
+                    id="enableKeywordHighlighting"
+                    name="enableKeywordHighlighting"
+                    type="checkbox"
+                    checked={currentStyles.enableKeywordHighlighting}
+                    onChange={handleToggleChange}
+                />
+                 <p className="text-xs text-gray-400 ml-7 -mt-3">Tắt tính năng này sẽ hiển thị lời kể dưới dạng văn bản thuần túy, không có từ khóa nào được tô màu hoặc có thể nhấp vào.</p>
+            </div>
+        </fieldset>
+
+        {renderStyleSection('narration', VIETNAMESE.narrationStylesLabel)}
+        {renderStyleSection('playerAction', VIETNAMESE.playerActionStylesLabel)}
+        {renderStyleSection('choiceButton', VIETNAMESE.choiceButtonStylesLabel)}
+        {renderStyleSection('keywordHighlight', VIETNAMESE.keywordHighlightStylesLabel)}
+        {renderStyleSection('dialogueHighlight', VIETNAMESE.dialogueHighlightStylesLabel || "Kiểu Chữ Hội Thoại Đặc Biệt")}
+      </div>
+      <div className="mt-6 pt-4 border-t border-gray-700 flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
+        <Button 
+            type="button" 
+            variant="danger" 
+            onClick={handleResetAll}
+            className="w-full sm:w-auto"
+        >
+          {VIETNAMESE.resetToDefaultsButton}
+        </Button>
+        <div className="flex space-x-3 w-full sm:w-auto">
+            <Button 
+                type="button" 
+                variant="secondary" 
+                onClick={onClose}
+                className="flex-1 sm:flex-auto"
+            >
+            {VIETNAMESE.closeButton}
+            </Button>
+            <Button 
+                type="button" 
+                variant="primary" 
+                onClick={handleApply}
+                className="flex-1 sm:flex-auto"
+            >
+            {VIETNAMESE.applySettingsButton}
+            </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+export default StyleSettingsModal;
