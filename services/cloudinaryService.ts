@@ -1,4 +1,3 @@
-
 import { 
   CLOUDINARY_CLOUD_NAME,
   CLOUDINARY_FOLDER_PLAYER,
@@ -60,27 +59,26 @@ export async function uploadImageToCloudinary(
       },
       body: JSON.stringify({ paramsToSign }),
     });
+    
+    // CORRECTED LOGIC: Read the body as text ONCE.
+    const responseText = await sigResponse.text();
 
     if (!sigResponse.ok) {
       let errorBodyText = `Server responded with ${sigResponse.status} ${sigResponse.statusText}.`;
+      let errorDetails = responseText; // Default to raw text
       try {
-        // Attempt to parse as JSON first, as the function *should* return JSON errors.
-        const errorBodyJson = await sigResponse.json(); 
-        errorBodyText += ` Details: ${errorBodyJson?.message || JSON.stringify(errorBodyJson) || 'Unknown server error content.'}`;
+        // TRY to parse the text as JSON.
+        const errorBodyJson = JSON.parse(responseText); 
+        errorDetails = errorBodyJson?.message || JSON.stringify(errorBodyJson) || 'Unknown server error content.';
       } catch (jsonError) {
-        // If parsing as JSON fails, it means the Netlify function returned non-JSON (e.g., HTML error page, empty response).
-        try {
-            const textResponse = await sigResponse.text(); // Try to get the raw text response.
-            errorBodyText += ` Raw response: ${textResponse || '(empty response body)'}`;
-        } catch (textError) {
-            // If even getting text fails, just note that.
-            errorBodyText += ` Could not retrieve error body text.`;
-        }
+        // If parsing fails, it's not JSON. Use the raw text which is already in errorDetails.
       }
+      errorBodyText += ` Details: ${errorDetails || '(empty response body)'}`;
       throw new Error(errorBodyText);
     }
     
-    const sigData = await sigResponse.json(); // This line should now be safer after the !sigResponse.ok check.
+    // Now, parse the successful response text as JSON.
+    const sigData = JSON.parse(responseText);
     signature = sigData.signature;
     apiKeyToUse = sigData.apiKey;
     timestampToUse = sigData.timestamp; // Use timestamp from server response to ensure consistency
@@ -93,7 +91,7 @@ export async function uploadImageToCloudinary(
     console.error("Error fetching Cloudinary signature:", error);
     const userMessage = error instanceof Error ? error.message : "Lỗi kết nối đến dịch vụ ký Cloudinary.";
     // Avoid redundant "Failed to get signature from server" if it's already in the message from the !sigResponse.ok block
-    if (error instanceof Error && error.message.startsWith("Failed to get signature from server")) {
+    if (error instanceof Error && error.message.startsWith("Server responded with")) {
         throw error;
     }
     throw new Error(`Không thể lấy chữ ký Cloudinary: ${userMessage}`);

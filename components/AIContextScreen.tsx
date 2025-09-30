@@ -101,7 +101,7 @@ const AIContextScreen: React.FC<AIContextScreenProps> = ({ onClose }) => {
         setSettings(knowledgeBase.aiContextConfig || DEFAULT_AI_CONTEXT_CONFIG);
         setRulebook(knowledgeBase.aiRulebook || DEFAULT_AI_RULEBOOK);
         setHasChanges(false);
-    }, [knowledgeBase.aiContextConfig, knowledgeBase.aiRulebook, onClose]);
+    }, [knowledgeBase.aiContextConfig, knowledgeBase.aiRulebook]);
 
     const handleToggle = (settingKey: keyof AIContextConfig) => {
         setSettings(prev => ({

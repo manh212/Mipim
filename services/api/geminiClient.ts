@@ -36,7 +36,7 @@ export const getApiSettings = (): ApiConfig => {
       
       const modelExists = AVAILABLE_MODELS.some(m => m.id === parsed.model);
       const avatarEngineExists = AVAILABLE_AVATAR_ENGINES.some(e => e.id === parsed.avatarGenerationEngine);
-      const ragTopKIsValid = typeof parsed.ragTopK === 'number' && parsed.ragTopK >= 0 && parsed.ragTopK <= 100;
+      const ragTopKIsValid = typeof parsed.ragTopK === 'number' && parsed.ragTopK >= 0 && parsed.ragTopK <= 500;
 
       // Handle user API keys with backward compatibility
       let userApiKeys: string[] = [''];
@@ -145,21 +145,39 @@ export async function generateContentAndCheck(
     // If proxy is enabled, use fetch to call the proxy server
     if (settings.useProxy && settings.proxyUrl) {
         try {
+            // Get effective API key, handling round-robin for user keys
+            let effectiveApiKey: string;
+            if (settings.apiKeySource === 'system') {
+                const systemApiKey = process.env.API_KEY;
+                if (typeof systemApiKey !== 'string' || systemApiKey.trim() === '') {
+                    throw new Error(VIETNAMESE.apiKeySystemUnavailable + " (API_KEY not found in environment for proxy)");
+                }
+                effectiveApiKey = systemApiKey;
+            } else {
+                const validKeys = settings.userApiKeys.filter(k => k && k.trim() !== '');
+                if (validKeys.length === 0) {
+                     const systemApiKey = process.env.API_KEY;
+                     if (!systemApiKey) {
+                        throw new Error("Proxy is enabled, but no user API keys are set and no system API key is available.");
+                     }
+                     effectiveApiKey = systemApiKey;
+                } else {
+                    if (currentApiKeyIndex >= validKeys.length) currentApiKeyIndex = 0;
+                    effectiveApiKey = validKeys[currentApiKeyIndex];
+                    currentApiKeyIndex = (currentApiKeyIndex + 1) % validKeys.length;
+                }
+            }
+            
             let finalProxyUrl = settings.proxyUrl.trim();
             if (finalProxyUrl && !finalProxyUrl.startsWith('http://') && !finalProxyUrl.startsWith('https://')) {
                 finalProxyUrl = 'http://' + finalProxyUrl;
             }
-
-            // --- START: PROXY FIX ---
-            // The path to the Google API endpoint needs to be part of the URL sent to the proxy.
-            const modelPath = `/v1beta/models/${params.model}:generateContent`;
             
-            // Safely combine the base proxy URL and the model path.
-            // Using URL constructor handles cases where proxyUrl might or might not have a trailing slash.
+            // Construct the final URL including the model path and API key
+            const modelPath = `/v1beta/models/${params.model}:generateContent?key=${effectiveApiKey}`;
             const fullProxyUrl = new URL(modelPath, finalProxyUrl).toString();
 
-            // The body sent to the proxy should be what the actual Google API expects.
-            // This means we need to remove the 'model' key from the top-level params object.
+            // The body for the request should not contain the 'model' key
             const { model, ...bodyForProxy } = params;
 
             const proxyResponse = await fetch(fullProxyUrl, {
@@ -169,20 +187,35 @@ export async function generateContentAndCheck(
                 },
                 body: JSON.stringify(bodyForProxy),
             });
-            // --- END: PROXY FIX ---
+
+            // CORRECTED LOGIC: Read body as text ONCE.
+            const responseText = await proxyResponse.text();
 
             if (!proxyResponse.ok) {
-                const errorText = await proxyResponse.text();
-                throw new Error(`Proxy server error: ${proxyResponse.status} - ${errorText}`);
+                let errorDetails = responseText; // Default to raw text
+                try {
+                    // TRY to parse the text as JSON.
+                    const errorJson = JSON.parse(responseText);
+                    errorDetails = errorJson.error?.message || JSON.stringify(errorJson);
+                } catch {
+                    // It's not JSON, so errorDetails already correctly contains the raw text.
+                }
+                throw new Error(`Proxy server error: ${proxyResponse.status} - ${errorDetails}`);
             }
 
-            const data = await proxyResponse.json();
+            // Now, parse the successful response text as JSON.
+            const data = JSON.parse(responseText);
             
-            // Mimic the structure of GenerateContentResponse
-            return {
-                text: data.text || '',
+            // Manually extract text from the first candidate's content part.
+            const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+            // Reconstruct a GenerateContentResponse-like object.
+            const fakeResponse: GenerateContentResponse = {
+                text: text,
                 candidates: data.candidates || [],
-            } as GenerateContentResponse;
+            } as any; 
+
+            return fakeResponse;
 
         } catch (error) {
             console.error("Error calling proxy server:", error);
@@ -198,11 +231,8 @@ export async function generateContentAndCheck(
     
     const response = await ai.models.generateContent({ ...params, config: finalConfig });
     
-    if (!response.text || response.text.trim() === '') {
-        // Don't throw error if grounding metadata exists, as search can return an answer without text.
-        if (!response.candidates?.[0]?.groundingMetadata?.groundingChunks) {
-            throw new Error("Phản hồi từ AI trống. Điều này có thể do bộ lọc nội dung. Vui lòng thử một hành động khác hoặc lùi lượt.");
-        }
+    if (!response.text && !response.candidates?.[0]?.groundingMetadata?.groundingChunks) {
+        throw new Error("Phản hồi từ AI trống. Điều này có thể do bộ lọc nội dung. Vui lòng thử một hành động khác hoặc lùi lượt.");
     }
     
     return response;
