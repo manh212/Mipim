@@ -1,6 +1,6 @@
 {
-  "name": "Phiêu lưu cùng AI 2.2",
-  "description": "",
+  "name": "Phiêu lưu cùng AI 2.3",
+  "description": "Những Tính Năng Mới:\n- Tái cấu trúc toàn diện các thành phần UI (Modal, Panel, Tabs) với thư viện chuyên dụng Radix UI để đảm bảo tuân thủ các tiêu chuẩn hỗ trợ tiếp cận (accessibility) cao nhất.\n- Cải thiện trải nghiệm cho người dùng trình đọc màn hình và người dùng bàn phím trên toàn bộ ứng dụng.\n- Nâng cao tính ngữ nghĩa HTML và khả năng thông báo của các cảnh báo động.",
   "requestFramePermissions": [],
   "prompt": ""
 }

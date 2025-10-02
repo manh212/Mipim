@@ -6,6 +6,7 @@ import { AIArchitectModal } from './gameSetup/AIArchitectModal';
 import { GameSetupProvider, useGameSetup } from '@/contexts/GameSetupContext';
 import { parseTagValue } from '@/utils/parseTagValue';
 import Modal from './ui/Modal';
+import * as Tabs from '@radix-ui/react-tabs';
 
 
 // Import tab components
@@ -164,8 +165,8 @@ interface GameSetupScreenProps {
 
 type SetupTab = 'aiAssist' | 'characterStory' | 'worldSettings' | 'startingElements';
 
-const activeTabStyle = "whitespace-nowrap py-3 px-3 sm:px-4 border-b-2 font-medium text-xs sm:text-sm border-indigo-500 text-indigo-400 focus:outline-none";
-const inactiveTabStyle = "whitespace-nowrap py-3 px-3 sm:px-4 border-b-2 font-medium text-xs sm:text-sm border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-500 focus:outline-none";
+const triggerStyle = "whitespace-nowrap py-3 px-3 sm:px-4 border-b-2 font-medium text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-indigo-500 rounded-t-md data-[state=inactive]:border-transparent data-[state=inactive]:text-gray-400 data-[state=inactive]:hover:text-gray-200 data-[state=inactive]:hover:border-gray-500 data-[state=active]:border-indigo-500 data-[state=active]:text-indigo-400";
+
 
 // Inner component to access context and hooks
 const GameSetupContent = ({ setCurrentScreen, onSetupComplete }: GameSetupScreenProps): React.ReactElement => {
@@ -276,7 +277,11 @@ const GameSetupContent = ({ setCurrentScreen, onSetupComplete }: GameSetupScreen
 
   return (
     <div className="min-h-screen bg-gray-800 p-4">
-      <div className="w-full max-w-4xl mx-auto bg-gray-900 shadow-2xl rounded-xl p-6 space-y-6">
+      <Tabs.Root 
+        className="w-full max-w-4xl mx-auto bg-gray-900 shadow-2xl rounded-xl p-6 space-y-6"
+        value={activeTab} 
+        onValueChange={(value) => setActiveTab(value as SetupTab)}
+      >
         <div className="text-center">
             <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 mb-4">
                 Cuộc Phiêu Lưu Mới
@@ -290,41 +295,33 @@ const GameSetupContent = ({ setCurrentScreen, onSetupComplete }: GameSetupScreen
         </div>
         
         <div className="border-b border-gray-700 sticky top-0 bg-gray-900 z-10 -mx-6 px-6 mb-2">
-          <nav className="-mb-px flex space-x-2 sm:space-x-4 overflow-x-auto pb-px hide-scrollbar" aria-label="Tabs" role="tablist">
-            <button id="tab-aiAssist" role="tab" aria-controls="panel-aiAssist" aria-selected={activeTab === 'aiAssist'} onClick={() => setActiveTab('aiAssist')} className={activeTab === 'aiAssist' ? activeTabStyle : inactiveTabStyle}>AI Hỗ Trợ</button>
-            <button id="tab-characterStory" role="tab" aria-controls="panel-characterStory" aria-selected={activeTab === 'characterStory'} onClick={() => setActiveTab('characterStory')} className={activeTab === 'characterStory' ? activeTabStyle : inactiveTabStyle}>Nhân Vật & Cốt Truyện</button>
-            <button id="tab-worldSettings" role="tab" aria-controls="panel-worldSettings" aria-selected={activeTab === 'worldSettings'} onClick={() => setActiveTab('worldSettings')} className={activeTab === 'worldSettings' ? activeTabStyle : inactiveTabStyle}>Thiết Lập Thế Giới</button>
-            <button id="tab-startingElements" role="tab" aria-controls="panel-startingElements" aria-selected={activeTab === 'startingElements'} onClick={() => setActiveTab('startingElements')} className={activeTab === 'startingElements' ? activeTabStyle : inactiveTabStyle}>Yếu Tố Khởi Đầu</button>
-          </nav>
+          <Tabs.List className="-mb-px flex space-x-2 sm:space-x-4 overflow-x-auto pb-px hide-scrollbar" aria-label="Tabs">
+            <Tabs.Trigger value="aiAssist" className={triggerStyle}>AI Hỗ Trợ</Tabs.Trigger>
+            <Tabs.Trigger value="characterStory" className={triggerStyle}>Nhân Vật & Cốt Truyện</Tabs.Trigger>
+            <Tabs.Trigger value="worldSettings" className={triggerStyle}>Thiết Lập Thế Giới</Tabs.Trigger>
+            <Tabs.Trigger value="startingElements" className={triggerStyle}>Yếu Tố Khởi Đầu</Tabs.Trigger>
+          </Tabs.List>
         </div>
 
         <div className="max-h-[calc(100vh-320px)] overflow-y-auto custom-scrollbar pr-2 pb-4 -mr-2">
-          {activeTab === 'aiAssist' && (
-            <div id="panel-aiAssist" role="tabpanel" tabIndex={0} aria-labelledby="tab-aiAssist">
+          <Tabs.Content value="aiAssist">
               <AIAssistTab setIsArchitectModalOpen={setIsArchitectModalOpen} />
-            </div>
-          )}
-          {activeTab === 'characterStory' && (
-            <div id="panel-characterStory" role="tabpanel" tabIndex={0} aria-labelledby="tab-characterStory">
+          </Tabs.Content>
+          <Tabs.Content value="characterStory">
               <CharacterStoryTab 
                 playerUploadedAvatarData={playerUploadedAvatarData}
                 setPlayerUploadedAvatarData={setPlayerUploadedAvatarData}
               />
-            </div>
-          )}
-          {activeTab === 'worldSettings' && (
-            <div id="panel-worldSettings" role="tabpanel" tabIndex={0} aria-labelledby="tab-worldSettings">
+          </Tabs.Content>
+          <Tabs.Content value="worldSettings">
               <WorldSettingsTab />
-            </div>
-          )}
-          {activeTab === 'startingElements' && (
-            <div id="panel-startingElements" role="tabpanel" tabIndex={0} aria-labelledby="tab-startingElements">
+          </Tabs.Content>
+          <Tabs.Content value="startingElements">
               <StartingElementsTab
                 openSections={openSections}
                 toggleSection={toggleSection}
               />
-            </div>
-          )}
+          </Tabs.Content>
         </div>
 
         <div className="mt-8 flex flex-col sm:flex-row justify-between items-center pt-6 border-t border-gray-700 space-y-3 sm:space-y-0 sm:space-x-4">
@@ -335,20 +332,20 @@ const GameSetupContent = ({ setCurrentScreen, onSetupComplete }: GameSetupScreen
             {VIETNAMESE.startGame}
           </Button>
         </div>
-      </div>
       
-      <AIArchitectModal
-          isOpen={isArchitectModalOpen}
-          onClose={() => setIsArchitectModalOpen(false)}
-          currentSettings={state.settings}
-          onApplyChanges={handleApplyArchitectChanges}
-      />
-      <ManualInputModal 
-        isOpen={isManualInputModalOpen} 
-        onClose={() => setIsManualInputModalOpen(false)} 
-        onApply={handleApplyManualInput} 
-        isLoading={isParsingManual}
-      />
+        <AIArchitectModal
+            isOpen={isArchitectModalOpen}
+            onClose={() => setIsArchitectModalOpen(false)}
+            currentSettings={state.settings}
+            onApplyChanges={handleApplyArchitectChanges}
+        />
+        <ManualInputModal 
+          isOpen={isManualInputModalOpen} 
+          onClose={() => setIsManualInputModalOpen(false)} 
+          onApply={handleApplyManualInput} 
+          isLoading={isParsingManual}
+        />
+      </Tabs.Root>
     </div>
   );
 };

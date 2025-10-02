@@ -109,7 +109,7 @@ const LoadGameScreen: React.FC<LoadGameScreenProps> = ({
   }, [notify, fetchSaveGames]);
 
   const renderSaveSlot = (slot: SaveGameMeta, isManual: boolean = false) => (
-    <div key={slot.id} className={`p-4 rounded-lg shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 transition-colors duration-150 ${isManual ? 'bg-emerald-800/30 border border-emerald-600 hover:bg-emerald-700/40' : 'bg-gray-800 hover:bg-gray-750'}`}>
+    <li key={slot.id} className={`p-4 rounded-lg shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 transition-colors duration-150 ${isManual ? 'bg-emerald-800/30 border border-emerald-600 hover:bg-emerald-700/40' : 'bg-gray-800 hover:bg-gray-750'}`}>
       <div className="flex-grow">
         <p className={`text-lg font-semibold ${isManual ? 'text-emerald-300' : 'text-indigo-300'}`}>{slot.name}</p>
         <div className="text-xs text-gray-400">
@@ -142,7 +142,7 @@ const LoadGameScreen: React.FC<LoadGameScreenProps> = ({
           {VIETNAMESE.deleteSaveButton}
         </Button>
       </div>
-    </div>
+    </li>
   );
 
   const allSavesCount = (manualSave ? 1 : 0) + autoSaves.length + otherSaves.length;
@@ -160,7 +160,7 @@ const LoadGameScreen: React.FC<LoadGameScreenProps> = ({
         </div>
 
         {isLoading && <Spinner text="Đang tải danh sách lưu..." className="my-8" />}
-        {error && <p className="text-red-400 bg-red-900/50 p-3 rounded-md text-center my-4 border border-red-700">{error}</p>}
+        {error && <p role="alert" className="text-red-400 bg-red-900/50 p-3 rounded-md text-center my-4 border border-red-700">{error}</p>}
         
         {!isLoading && !error && allSavesCount === 0 && (
           <p className="text-gray-400 italic text-center py-8">{VIETNAMESE.noSaveGamesFound}</p>
@@ -171,25 +171,27 @@ const LoadGameScreen: React.FC<LoadGameScreenProps> = ({
             {manualSave && (
               <section>
                 <h3 className="text-xl font-semibold text-emerald-400 mb-2">Lưu Thủ Công</h3>
-                {renderSaveSlot(manualSave, true)}
+                <ul>
+                  {renderSaveSlot(manualSave, true)}
+                </ul>
               </section>
             )}
             
             {autoSaves.length > 0 && (
               <section>
                 <h3 className="text-xl font-semibold text-sky-400 mb-2">Lưu Tự Động (Mới nhất ở trên)</h3>
-                <div className="space-y-3">
+                <ul className="space-y-3">
                   {autoSaves.sort((a,b) => b.timestamp.getTime() - a.timestamp.getTime()).map(slot => renderSaveSlot(slot))}
-                </div>
+                </ul>
               </section>
             )}
 
             {otherSaves.length > 0 && (
                  <section>
                     <h3 className="text-xl font-semibold text-gray-400 mb-2">Các File Lưu Khác (Đã Nhập, Cũ)</h3>
-                    <div className="space-y-3">
+                    <ul className="space-y-3">
                         {otherSaves.map(slot => renderSaveSlot(slot))}
-                    </div>
+                    </ul>
                 </section>
             )}
           </div>

@@ -188,12 +188,12 @@ const ApiSettingsScreen: React.FC<ApiSettingsScreenProps> = ({ setCurrentScreen,
         </h2>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-500 bg-opacity-30 border border-red-700 text-red-300 rounded-md text-sm">
+          <div role="alert" className="mb-4 p-3 bg-red-500 bg-opacity-30 border border-red-700 text-red-300 rounded-md text-sm">
             {error}
           </div>
         )}
         {successMessage && (
-          <div className="mb-4 p-3 bg-green-500 bg-opacity-30 border border-green-700 text-green-300 rounded-md text-sm">
+          <div role="alert" className="mb-4 p-3 bg-green-500 bg-opacity-30 border border-green-700 text-green-300 rounded-md text-sm">
             {successMessage}
           </div>
         )}

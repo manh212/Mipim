@@ -63,6 +63,37 @@
         content-visibility: auto;
         contain-intrinsic-size: 75px; /* A reasonable default height for a message block */
       }
+
+      /* Animation for OffCanvasPanel */
+      @keyframes slideInFromRight {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+      }
+      @keyframes slideOutToRight {
+        from { transform: translateX(0); }
+        to { transform: translateX(100%); }
+      }
+      @keyframes slideInFromLeft {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(0); }
+      }
+      @keyframes slideOutToLeft {
+        from { transform: translateX(0); }
+        to { transform: translateX(-100%); }
+      }
+
+      .OffCanvasContent[data-position='right'][data-state='open'] {
+        animation: slideInFromRight 300ms ease-out;
+      }
+      .OffCanvasContent[data-position='right'][data-state='closed'] {
+        animation: slideOutToRight 300ms ease-in;
+      }
+      .OffCanvasContent[data-position='left'][data-state='open'] {
+        animation: slideInFromLeft 300ms ease-out;
+      }
+      .OffCanvasContent[data-position='left'][data-state='closed'] {
+        animation: slideOutToLeft 300ms ease-in;
+      }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,7 +109,9 @@
     "crypto": "https://esm.sh/crypto@^1.0.1",
     "pako": "https://esm.sh/pako@^2.1.0",
     "fast-json-patch": "https://esm.sh/fast-json-patch@^3.1.1",
-    "@netlify/functions": "https://esm.sh/@netlify/functions@^4.2.1"
+    "@netlify/functions": "https://esm.sh/@netlify/functions@^4.2.1",
+    "@radix-ui/react-dialog": "https://esm.sh/@radix-ui/react-dialog@^1.1.1",
+    "@radix-ui/react-tabs": "https://esm.sh/@radix-ui/react-tabs@^1.1.0"
   }
 }
 </script>
