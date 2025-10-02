@@ -205,7 +205,17 @@ export const generateContinuePrompt = (
   
   // --- START: Build prompt sections conditionally based on dynamicAiContextConfig ---
   
-  const writingStyleGuideSection = (dynamicAiContextConfig.sendWritingStyle && worldConfig?.writingStyleGuide) ? `
+  const writingStyleSection = (dynamicAiContextConfig.sendWritingStyle && worldConfig?.writingStyle) ? `
+---
+**HƯỚNG DẪN VỀ VĂN PHONG CHUNG CỦA THẾ GIỚI:**
+Đây là các quy tắc hoặc mô tả chung về văn phong mà bạn phải tuân theo khi kể chuyện.
+"""
+${worldConfig.writingStyle}
+"""
+` : '';
+
+  const writingStyleMimicrySection = (dynamicAiContextConfig.sendWritingStyle && worldConfig?.writingStyleGuide) ? `
+---
 **HƯỚNG DẪN BẮT CHƯỚC VĂN PHONG NGƯỜI DÙNG (CỰC KỲ QUAN TRỌNG):**
 Mục tiêu hàng đầu của bạn là tái hiện một cách trung thực nhất văn phong của người dùng dựa vào đoạn văn mẫu sau. Đừng chỉ sao chép từ ngữ, mà hãy nắm bắt và áp dụng đúng **nhịp điệu**, **cách lựa chọn từ vựng**, và **thái độ/cảm xúc** đặc trưng của họ. Lời kể của bạn phải khiến người đọc tin rằng nó do chính người dùng viết ra. TUYỆT ĐỐI không pha trộn giọng văn AI hoặc làm "mềm hóa" văn phong gốc.
 
@@ -218,7 +228,6 @@ ${worldConfig.writingStyleGuide}
   let finalPrompt = `
 **YÊU CẦU CỐT LÕI:** Tiếp tục câu chuyện game nhập vai thể loại "${effectiveGenre}" bằng tiếng Việt.
 **QUY TẮC QUAN TRỌNG NHẤT:** Bắt đầu phản hồi của bạn bằng cách đi thẳng vào lời kể về những gì xảy ra do hành động của người chơi. **TUYỆT ĐỐI KHÔNG** bình luận về lựa chọn của người chơi. Hãy kể trực tiếp kết quả.
-${writingStyleGuideSection}
 ---
 **PHẦN 1: BỐI CẢNH (CONTEXT)**`;
 
@@ -347,6 +356,9 @@ Xử lý nội dung trên như một hành động mà nhân vật chính (${wor
 `;
 
   // --- NEW: CREATIVE RULES SECTION ---
+  finalPrompt += writingStyleSection;
+  finalPrompt += writingStyleMimicrySection;
+  
   if (dynamicAiContextConfig.sendDifficultyGuidance) {
     finalPrompt += `
 ---

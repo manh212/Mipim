@@ -44,7 +44,7 @@ const buildSkillTag = (skill: StartingSkill): string => {
 };
 
 export const generateInitialPrompt = (worldConfig: WorldSettings, aiContextConfig: AIContextConfig): string => {
-  const { genre, customGenreName, isCultivationEnabled, raceCultivationSystems, yeuThuRealmSystem, canhGioiKhoiDau, nsfwMode, nsfwDescriptionStyle, violenceLevel, storyTone, writingStyleGuide, startingDate } = worldConfig;
+  const { genre, customGenreName, isCultivationEnabled, raceCultivationSystems, yeuThuRealmSystem, canhGioiKhoiDau, nsfwMode, nsfwDescriptionStyle, violenceLevel, storyTone, writingStyle, writingStyleGuide, startingDate } = worldConfig;
 
   const getMainRealms = (realmSystem: string): string[] => {
     return realmSystem.split(' - ').map(s => s.trim()).filter(s => s.length > 0);
@@ -64,33 +64,23 @@ export const generateInitialPrompt = (worldConfig: WorldSettings, aiContextConfi
     realmSystemDescription = `"${raceCultivationSystems.map(s => `${s.raceName}: ${s.realmSystem}`).join('; ')}" (Ví dụ: "Phàm Nhân - Luyện Khí - Trúc Cơ - Kim Đan - Nguyên Anh - Hóa Thần - Luyện Hư - Hợp Thể - Đại Thừa - Độ Kiếp")`;
     subRealmNamesInstruction = `Mỗi cảnh giới lớn (nếu có trong thể loại này) sẽ có 10 cấp độ phụ: ${SUB_REALM_NAMES.join(', ')}.`;
   }
-
-  let difficultyGuidanceText = ""; 
-  if (aiContextConfig.sendDifficultyGuidance) {
-      switch (worldConfig.difficulty) {
-        case 'Dễ':
-          difficultyGuidanceText = VIETNAMESE.difficultyGuidanceEasy;
-          break;
-        case 'Thường':
-          difficultyGuidanceText = VIETNAMESE.difficultyGuidanceNormal;
-          break;
-        case 'Khó':
-          difficultyGuidanceText = VIETNAMESE.difficultyGuidanceHard;
-          break;
-        case 'Ác Mộng':
-          difficultyGuidanceText = VIETNAMESE.difficultyGuidanceNightmare;
-          break;
-        default:
-          difficultyGuidanceText = VIETNAMESE.difficultyGuidanceNormal;
-      }
-  }
-
+  
   let nsfwGuidanceCombined = "";
   if (aiContextConfig.sendNsfwGuidance) {
       nsfwGuidanceCombined = getNsfwGuidance(worldConfig);
   }
   
-  const writingStyleGuideSection = (aiContextConfig.sendWritingStyle && writingStyleGuide) ? `
+  const writingStyleSection = (aiContextConfig.sendWritingStyle && writingStyle) ? `
+---
+**HƯỚNG DẪN VỀ VĂN PHONG CHUNG CỦA THẾ GIỚI:**
+Đây là các quy tắc hoặc mô tả chung về văn phong mà bạn phải tuân theo khi kể chuyện.
+"""
+${writingStyle}
+"""
+` : '';
+
+  const writingStyleMimicrySection = (aiContextConfig.sendWritingStyle && writingStyleGuide) ? `
+---
 **HƯỚNG DẪN BẮT CHƯỚC VĂN PHONG NGƯỜI DÙNG (CỰC KỲ QUAN TRỌNG):**
 Mục tiêu hàng đầu của bạn là tái hiện một cách trung thực nhất văn phong của người dùng dựa vào đoạn văn mẫu sau. Đừng chỉ sao chép từ ngữ, mà hãy nắm bắt và áp dụng đúng **nhịp điệu**, **cách lựa chọn từ vựng**, và **thái độ/cảm xúc** đặc trưng của họ. Lời kể của bạn phải khiến người đọc tin rằng nó do chính người dùng viết ra. TUYỆT ĐỐI không pha trộn giọng văn AI hoặc làm "mềm hóa" văn phong gốc.
 
@@ -114,12 +104,7 @@ ${timeOfDayContext}
   // Build the rules section dynamically
   const rulesSection = buildRulesSection(aiContextConfig, DEFAULT_AI_RULEBOOK, worldConfig, mainRealms, startingDate);
 
-  return `**YÊU CẦU CỐT LÕI:** Bắt đầu một câu chuyện game nhập vai thể loại "${effectiveGenre}" bằng tiếng Việt. Tạo ra một thế giới sống động và một cốt truyện mở đầu hấp dẫn dựa trên thông tin do người chơi cung cấp. Bắt đầu lời kể ngay lập tức, không có lời dẫn hay tự xưng là người kể chuyện.
-
-${writingStyleGuideSection}
-
-${isCultivationEnabled ? subRealmNamesInstruction : ''}
-
+  const worldAndCharacterInfo = `
 **THÔNG TIN THẾ GIỚI VÀ NHÂN VẬT:**
 Thể loại: ${effectiveGenre} ${(genre === CUSTOM_GENRE_VALUE && customGenreName) ? `(Người chơi tự định nghĩa)` : `(Từ danh sách)`}
 Hệ Thống Tu Luyện/Sức Mạnh Đặc Thù: ${isCultivationEnabled ? "BẬT" : "TẮT"}
@@ -157,13 +142,26 @@ ${worldConfig.startingLore && worldConfig.startingLore.length > 0 ? worldConfig.
 ${worldConfig.startingLocations && worldConfig.startingLocations.length > 0 ? worldConfig.startingLocations.map(loc => `  - Tên: ${loc.name}, Mô tả: ${loc.description}, Loại: ${loc.locationType || 'Mặc định'}${loc.isSafeZone ? ' (Khu An Toàn)' : ''}${loc.regionId ? `, Vùng: ${loc.regionId}` : ''}${loc.mapX !== undefined ? `, mapX: ${loc.mapX}` : ''}${loc.mapY !== undefined ? `, mapY: ${loc.mapY}` : ''}`).join('\n') : "  Không có địa điểm khởi đầu cụ thể."}
 - Phe phái khởi đầu cụ thể:
 ${worldConfig.startingFactions && worldConfig.startingFactions.length > 0 ? worldConfig.startingFactions.map(fac => `  - Tên: ${fac.name}, Mô tả: ${fac.description}, Chính/Tà: ${fac.alignment}, Uy tín ban đầu: ${fac.initialPlayerReputation}`).join('\n') : "  Không có phe phái khởi đầu cụ thể."}
+`;
 
-${aiContextConfig.sendDifficultyGuidance ? `**HƯỚNG DẪN VỀ ĐỘ KHÓ (Rất quan trọng để AI tuân theo):**
-- **Dễ:** ${VIETNAMESE.difficultyGuidanceEasy} Tỉ lệ thành công cho lựa chọn thường CAO (ví dụ: 70-95%). Rủi ro thấp, phần thưởng dễ đạt.
-- **Thường:** ${VIETNAMESE.difficultyGuidanceNormal} Tỉ lệ thành công cho lựa chọn TRUNG BÌNH (ví dụ: 50-80%). Rủi ro và phần thưởng cân bằng.
-- **Khó:** ${VIETNAMESE.difficultyGuidanceHard} Tỉ lệ thành công cho lựa chọn THẤP (ví dụ: 30-65%). Rủi ro cao, phần thưởng lớn nhưng khó kiếm.
-- **Ác Mộng:** ${VIETNAMESE.difficultyGuidanceNightmare} Tỉ lệ thành công cho lựa chọn CỰC KỲ THẤP (ví dụ: 15-50%). Rủi ro rất lớn, phần thưởng cực kỳ hiếm hoi.
-Hiện tại người chơi đã chọn độ khó: **${worldConfig.difficulty}**. Hãy điều chỉnh tỉ lệ thành công, lợi ích và rủi ro trong các lựa chọn [CHOICE: "..."] của bạn cho phù hợp với hướng dẫn độ khó này.` : ''}
+const difficultyGuidanceSection = aiContextConfig.sendDifficultyGuidance ? `
+---
+**HƯỚNG DẪN VỀ ĐỘ KHÓ (Rất quan trọng để AI tuân theo):**
+- **Dễ:** ${VIETNAMESE.difficultyGuidanceEasy}
+- **Thường:** ${VIETNAMESE.difficultyGuidanceNormal}
+- **Khó:** ${VIETNAMESE.difficultyGuidanceHard}
+- **Ác Mộng:** ${VIETNAMESE.difficultyGuidanceNightmare}
+Hiện tại người chơi đã chọn độ khó: **${worldConfig.difficulty}**. Hãy điều chỉnh tỉ lệ thành công, lợi ích và rủi ro trong các lựa chọn [CHOICE: "..."] của bạn cho phù hợp với hướng dẫn độ khó này.` : '';
+
+
+  return `**YÊU CẦU CỐT LÕI:** Bắt đầu một câu chuyện game nhập vai thể loại "${effectiveGenre}" bằng tiếng Việt. Tạo ra một thế giới sống động và một cốt truyện mở đầu hấp dẫn dựa trên thông tin do người chơi cung cấp. Bắt đầu lời kể ngay lập tức, không có lời dẫn hay tự xưng là người kể chuyện.
+
+${isCultivationEnabled ? subRealmNamesInstruction : ''}
+${worldAndCharacterInfo}
+
+${writingStyleSection}
+${writingStyleMimicrySection}
+${difficultyGuidanceSection}
 
 **CHẾ ĐỘ NỘI DUNG VÀ PHONG CÁCH:**
 ${nsfwGuidanceCombined}
