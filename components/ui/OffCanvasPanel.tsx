@@ -29,9 +29,7 @@ const OffCanvasPanel: React.FC<OffCanvasPanelProps> = ({
       // Hide main app content from screen readers
       document.getElementById('root')?.setAttribute('aria-hidden', 'true');
     } else {
-       // Restore focus to the trigger element when closing
-       triggerElementRef.current?.focus();
-       // Un-hide main app content
+       // Un-hide main app content. Focus is handled by onAnimationEnd.
        document.getElementById('root')?.setAttribute('aria-hidden', 'false');
     }
   }, [isOpen]);
@@ -42,9 +40,14 @@ const OffCanvasPanel: React.FC<OffCanvasPanelProps> = ({
     const panelElement = panelContentRef.current;
     if (!panelElement) return;
     
-    // Focus the panel itself. A timeout is needed.
+    // Focus the close button. A timeout is needed.
     const timer = setTimeout(() => {
-      panelElement.focus();
+      const closeButton = panelElement.querySelector<HTMLElement>(`[aria-label="${VIETNAMESE.closeButton}"]`);
+      if (closeButton) {
+        closeButton.focus();
+      } else {
+        panelElement.focus();
+      }
     }, 100);
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -86,6 +89,8 @@ const OffCanvasPanel: React.FC<OffCanvasPanelProps> = ({
   const handleAnimationEnd = () => {
     if (!isOpen) {
       setIsRendered(false);
+      // Restore focus to the trigger element right before unmounting
+      triggerElementRef.current?.focus();
     }
   };
 

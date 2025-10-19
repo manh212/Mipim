@@ -22,9 +22,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
       // Hide main app content from screen readers
       document.getElementById('root')?.setAttribute('aria-hidden', 'true');
     } else {
-       // Restore focus to the trigger element when closing
-       triggerElementRef.current?.focus();
-       // Un-hide main app content
+       // Un-hide main app content. Focus is handled by onAnimationEnd.
        document.getElementById('root')?.setAttribute('aria-hidden', 'false');
     }
   }, [isOpen]);
@@ -35,10 +33,16 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
     const modalElement = modalContentRef.current;
     if (!modalElement) return;
 
-    // Focus the modal itself or the first focusable element inside it.
+    // Focus the close button for better accessibility.
     // A timeout is needed to allow the modal to render and animate.
     const timer = setTimeout(() => {
-      modalElement.focus();
+      const closeButton = modalElement.querySelector<HTMLElement>(`[aria-label="${VIETNAMESE.closeButton}"]`);
+      if (closeButton) {
+        closeButton.focus();
+      } else {
+        // Fallback to the modal container if the button isn't found for some reason
+        modalElement.focus();
+      }
     }, 100);
     
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -80,6 +84,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   const handleAnimationEnd = () => {
     if (!isOpen) {
       setIsRendered(false);
+      // Restore focus to the trigger element right before unmounting
+      triggerElementRef.current?.focus();
     }
   };
   
