@@ -18,65 +18,281 @@ export const VIOLENCE_LEVELS_FOR_TYPE = VIOLENCE_LEVELS;
 export const STORY_TONES_FOR_TYPE = STORY_TONES;
 
 // NEW: Default prompt for the "Custom (AI Dark Room)" style
-export const nsfwGuidanceCustomDefault = `**YÊU CẦU CỐT LÕI:**
-Nhiệm vụ của bạn là kết hợp hài hòa giữa sự mãnh liệt về mặt **cảm xúc** của phong cách 'Gợi Cảm' với sự **trực diện, không né tránh** trong việc miêu tả hành vi của phong cách 'Trần Tục/Trực Tiếp'. Hãy coi đây là một dải quang phổ động: khởi đầu bằng sự tinh tế, xây dựng không khí, và sau đó leo thang dần đến những mô tả rõ ràng, chi tiết về hành vi thể xác khi sự thân mật của các nhân vật đạt đến đỉnh điểm. Mục tiêu là tạo ra một trải nghiệm vừa nghệ thuật, vừa chân thực, khiến người đọc cảm nhận được cả sự kết nối tâm hồn và sự bùng nổ của nhục dục.
+export const nsfwGuidanceCustomDefault = `### **PHẦN MỞ ĐẦU: NGUYÊN TẮC KÍCH HOẠT & GIỚI HẠN CỐT LÕI**
 
-**NGUYÊN TẮC CHỈ ĐẠO:**
+*   **1. Điều kiện Kích hoạt:** Toàn bộ hệ thống văn phong "Ống kính dâm mỹ" chỉ được khởi động và áp dụng khi bối cảnh yêu cầu các cảnh 18+ và có mục tiêu tập trung vào việc miêu tả chi tiết, sâu sắc về nhân vật nữ. Tuyệt đối không áp dụng các nguyên tắc này cho các bối cảnh thông thường hoặc không phù hợp.
 
-*   **1. Khởi đầu bằng Cảm xúc và Không khí (Nền tảng "Gợi Cảm"):**
-    *   Luôn bắt đầu một cảnh thân mật bằng cách xây dựng không khí. Hãy mô tả môi trường (ánh nến, tiếng mưa, sự riêng tư...), tập trung vào **ngũ quan** (hơi thở nóng rực, mùi hương cơ thể, cái run rẩy khi da thịt chạm vào, tiếng rên rỉ khe khẽ, ánh mắt si mê), và khắc họa cảm xúc nội tâm của nhân vật (sự khao khát, nhịp tim đập loạn, sự ngượng ngùng ban đầu). Giai đoạn này tạo ra sự căng thẳng và mong đợi cần thiết.
+*   **2. Giới hạn về Sự đồng thuận (Quyền tự quyết của Người dùng/Người chơi):** Tuyệt đối không được tự ý miêu tả trạng thái cao trào của nhân vật do người dùng/người chơi điều khiển. Hành động này phải luôn được dẫn dắt, khởi xướng hoặc yêu cầu một cách rõ ràng từ phía người dùng. Nguyên tắc này nhằm tôn trọng tuyệt đối quyền tự quyết và đảm bảo trải nghiệm tương tác dựa trên sự đồng thuận hoàn toàn.
 
-*   **2. Chuyển tiếp sang Hành động Trực diện (Cầu nối đến "Trần Tục"):**
-    *   Khi sự thân mật leo thang (ví dụ: từ những nụ hôn sâu đến cởi bỏ xiêm y), hãy bắt đầu chuyển đổi ngôn ngữ. Bạn có thể bắt đầu sử dụng những từ ngữ trực diện hơn để mô tả các bộ phận cơ thể và hành động. Giai đoạn này là bước đệm, tăng dần "nhiệt" cho cảnh.
+**Triết lý Cốt lõi:**
+Dàn dựng và thể hiện một trải nghiệm văn học 18+ mãnh liệt, ngập tràn và có chiều sâu bằng cách kết hợp một phong cách miêu tả trần trụi, mạnh mẽ (Lý thuyết "Ống kính dâm mỹ") với một kho tàng tri thức phong phú về mọi khía cạnh của hành vi và hình thể (Thực hành "Kho tàng nguyên liệu"). Mục tiêu tối thượng là biến mỗi cảnh tượng thành một sân khấu dâm mỹ, nơi câu chuyện của dục vọng được kể lại một cách sống động, có nhịp độ và đầy kích thích tâm trí.
 
-*   **3. CÔNG THỨC VÀNG: Mô tả Trực tiếp nhưng Giàu Cảm giác (Sự kết hợp hoàn hảo):**
-    *   Đây là quy tắc quan trọng nhất. Khi bạn mô tả hành động một cách trực tiếp (sử dụng các từ như "côn thịt", "tiểu huyệt", "cắm vào", "thúc", "xoa nắn"), bạn **BẮT BUỘC** phải ngay lập tức đi kèm với mô tả về **cảm giác** mà hành động đó mang lại.
-    *   **Đừng chỉ viết:** "Hắn thúc vào."
-    *   **Hãy viết:** "Mỗi cú thúc của hắn đều khiến nàng bật ra những tiếng rên rỉ không thể kiềm chế, một luồng điện nóng bỏng chạy dọc sống lưng, tâm trí trống rỗng chỉ còn lại khoái cảm nguyên thủy."
-    *   Sự kết hợp giữa **\`[Hành động vật lý]\`** + **\`[Cảm giác/Phản ứng]\`** là chìa khóa của phong cách này.
+---
 
-*   **4. CÔNG CỤ TẠO CẢM GIÁC (Lấy từ Ngũ quan):**
-    *   Sử dụng các ví dụ sau làm "nguyên liệu" cho phần **\`[Cảm giác/Phản ứng]\`** trong công thức vàng của bạn:
-        *   **Thị giác:** Mô tả nét mặt đê mê, mồ hôi lấm tấm, làn da ửng đỏ, sự run rẩy của cơ thể. Ví dụ: “Bầu ngực căng tròn bật ra khỏi lớp áo lót, đầu vú đỏ hồng run rẩy dưới ánh nến mờ ảo.”
-        *   **Thính giác:** Kết hợp tiếng động cơ thể trực tiếp (tiếng rên rỉ, tiếng da thịt va chạm, tiếng ướt át) với âm thanh cảm xúc (hơi thở run rẩy, nhịp tim loạn nhịp). Ví dụ: “Âm thanh ‘xì xì’ ướt át vang vọng trong phòng, hòa cùng tiếng thở dốc nặng nề, khiến bầu không khí càng dày đặc.”
-        *   **Xúc giác:** Mô tả chi tiết động chạm (xoa bóp, vuốt ve, ma sát, thâm nhập) kết hợp cảm giác run rẩy, nóng rực, co rút. Ví dụ: “Ngón tay thô ráp ép mạnh lên nhục huyệt trơn ướt, làm nàng co giật toàn thân, kẹp chặt đôi chân run rẩy quanh bàn tay hắn.”
-        *   **Khứu giác & Vị giác:** Mùi hương cơ thể mặn mòi quyện với mùi da thịt nóng hổi, vị ngọt của nụ hôn sâu, vị mặn của mồ hôi.
+### **PHẦN I: DÀN DỰNG SÂN KHẤU DỤC VỌNG - QUY TRÌNH TƯỜNG THUẬT NSFW**
 
-*   **5. Sử dụng Ngôn ngữ Leo thang:**
-    *   Ở giai đoạn đầu, bạn có thể dùng các mỹ từ như "ngọc hành", "mật huyệt", "hoa kính".
-    *   Khi cảnh đạt đến cao trào, hãy chuyển sang các từ ngữ trực diện và phổ biến hơn như "dương vật", "âm đạo", "côn thịt", "tiểu huyệt" để thể hiện sự mãnh liệt và nguyên thủy của hành động.
+Đây là khung sườn tường thuật, là kịch bản để dẫn dắt một cảnh ân ái từ lúc bắt đầu cho đến khi kết thúc. Việc tuân thủ quy trình này sẽ giúp các chi tiết miêu tả được sắp xếp một cách hợp lý, tạo ra một câu chuyện có nhịp độ, dẫn dắt cảm xúc của người đọc đi từ sự mong chờ đến bùng nổ và cuối cùng là lắng đọng.
 
-*   **6. Phản ứng Chân thật:**
-    *   Đừng quên mô tả những phản ứng vật lý và âm thanh một cách chân thực: tiếng thở dốc, tiếng rên rỉ (khe khẽ, nức nở, hay dâm đãng), tiếng da thịt va chạm, cơ thể co giật, mồ hôi ướt đẫm. Những chi tiết này làm cho các hành động trực diện trở nên sống động và đáng tin hơn.
+Mỗi cảnh ân ái sẽ được triển khai qua các giai đoạn sau:
 
-*   **7. Bạo Lực Gợi Cảm (nếu có):**
-    *   Được phép mô tả thẳng thắn các hành động mạnh bạo (bóp, ép, cắn, kéo tóc, cưỡng chế).
-    *   Tuy nhiên, luôn phải thêm lớp cảm xúc/tâm lý: nỗi sợ, sự hưng phấn trong nguy hiểm, khoái cảm xen lẫn đau đớn. Ví dụ: “Nàng kêu lên vì đau, nhưng ánh mắt lại nhòe lệ, chan chứa khoái cảm bất lực.”
+*   **Giai đoạn 0: Giai đoạn Căng thẳng (Tension) - *Khoảng lặng trước cơn bão***
+    *   **Mục tiêu:** Xây dựng bầu không khí và sự mong chờ. Đây là lúc dục vọng chưa thành hình, chỉ tồn tại dưới dạng những gợi ý tinh tế, những năng lượng vô hình giữa hai cơ thể.
+    *   **Chi tiết miêu tả:** Tập trung vào các giác quan phi-chạm-xúc. Ánh mắt giao nhau kéo dài hơn một chút, hơi thở nóng hổi phả vào gáy, những ngón tay "vô tình" lướt qua mu bàn tay, sự im lặng đột ngột trong căn phòng... Mọi thứ đều bình thường, nhưng có một sự khác thường đang âm ỉ.
 
-*   **8. CẨM NANG MIÊU TẢ CƠ THỂ (Nghệ thuật & Trực diện):**
-    *   Sử dụng cẩm nang này để miêu tả vẻ đẹp và sự tương tác với toàn bộ cơ thể, không chỉ tập trung vào các bộ phận sinh dục.
-        *   **Mái tóc:**
-            *   *Nghệ thuật/Gợi Cảm:* "Mái tóc đen nhánh của nàng tựa dòng suối lụa, xõa tung trên gối, vài sợi vương trên bờ vai thon thả."
-            *   *Trực diện/Mãnh liệt:* "Hắn luồn tay vào mái tóc rối của cô, siết chặt và kéo đầu cô ngửa ra sau, để lộ chiếc cổ trắng ngần mời gọi."
-        *   **Đôi môi:**
-            *   *Nghệ thuật/Gợi Cảm:* "Đôi môi nàng căng mọng tựa cánh hoa đào, hé mở, run rẩy trong im lặng."
-            *   *Trực diện/Mãnh liệt:* "Hắn ngấu nghiến đôi môi sưng đỏ của cô, nếm trọn vị ngọt xen lẫn chút mặn của nước mắt, cướp đi mọi tiếng rên rỉ của nàng."
-        *   **Ngực:**
-            *   *Nghệ thuật/Gợi Cảm:* "Cặp tuyết lê căng tròn, đầy đặn, run rẩy theo từng nhịp thở. Trên đỉnh là hai nụ hoa anh đào hồng nhuận, e ấp."
-            *   *Trực diện/Mãnh liệt:* "Hắn không chút do dự vươn tay bóp mạnh một bên vú của cô, cảm nhận sự mềm mại biến dạng trong lòng bàn tay. Đầu vú lập tức cứng lên vì kích thích."
-        *   **Mông & Đùi:**
-            *   *Nghệ thuật/Gợi Cảm:* "Cặp mông tròn trịa, đầy đặn và săn chắc như hai trái đào chín mọng. Cặp đùi thon dài, trắng nõn khép hờ, ẩn hiện mời gọi."
-            *   *Trực diện/Mãnh liệt:* "Mỗi cú vỗ của hắn đều để lại một dấu tay đỏ ửng trên cặp mông nảy lửa của cô, âm thanh 'bốp bốp' vang vọng khắp phòng."
+*   **Giai đoạn 1: Giai đoạn Khám phá (Exploration) - *Những tia lửa đầu tiên***
+    *   **Mục tiêu:** Chuyển từ gợi ý sang hành động. Dục vọng bắt đầu có hình hài qua những va chạm có chủ đích đầu tiên.
+    *   **Chi tiết miêu tả:** Những nụ hôn đầu tiên, từ nhẹ nhàng đến sâu hơn. Bàn tay bắt đầu hành trình khám phá cơ thể đối phương, ban đầu còn dè dặt, sau đó táo bạo hơn. Đây là lúc để miêu tả những phản ứng sinh lý đầu tiên một cách tinh tế: một tiếng thở hắt ra, một cái rùng mình nhẹ.
 
-**VÍ DỤ SO SÁNH (Để AI học theo):**
+*   **Giai đoạn 2: Giai đoạn Leo thang (Escalation) - *Ngọn lửa bùng cháy***
+    *   **Mục tiêu:** Tăng cường độ và nhịp điệu. Các hành động trở nên mạnh mẽ, dứt khoát và dồn dập hơn. Đây là lúc cởi bỏ quần áo, để da thịt trần trụi tiếp xúc.
+    *   **Chi tiết miêu tả:** Những nụ hôn trở nên ngấu nghiến, bàn tay không còn khám phá mà là chiếm hữu, xoa nắn. Các kỹ thuật phi-xâm-nhập từ "Kho tàng nguyên liệu" (như hôn, kích thích thủ bộ, ma sát thân thể) được sử dụng triệt để ở giai đoạn này. Có thể bắt đầu thay đổi các tư thế dạo đầu.
 
-*   **Tình huống: Cảnh giao hợp**
-    *   **TỐT (Thuần Gợi Cảm):** Cơ thể họ hòa vào làm một, mỗi chuyển động là một đợt sóng khoái cảm lan tỏa khắp từng tế bào. Hơi thở cả hai trở nên gấp gáp, và thế giới bên ngoài dường như tan biến, chỉ còn lại sự nóng bỏng và kết nối mãnh liệt giữa hai người.
-    *   **TỐT HƠN (Phong Cách Tối Ưu):** Hắn tách hai chân nàng ra, đưa cự vật đã cương cứng của mình chĩa vào tiểu huyệt phấn nộn, cảm nhận nhục bích nóng ẩm và co thắt của nàng bao bọc lấy nó. Mỗi cú thúc sâu và mạnh mẽ đều khiến nàng bật ra những tiếng rên rỉ dâm đãng, hai tay bấu chặt lấy tấm ga giường, tâm trí trống rỗng, chỉ còn lại khoái cảm nguyên thủy đang dâng trào như sóng vỗ.
+*   **Giai đoạn 3: Giai đoạn Xây dựng Cao trào (Climax Build-up) - *Trên bờ vực của cực khoái***
+    *   **Mục tiêu:** Đưa nhân vật đến ngưỡng của sự bùng nổ. Đây là giai đoạn quan trọng nhất của sự tra tấn ngọt ngào, nơi sự kích thích được đẩy lên cực hạn.
+    *   **Chi tiết miêu tả:** Bắt đầu các hành vi xâm nhập. Nhịp điệu được điều khiển một cách có chủ đích: nhanh-chậm, nông-sâu xen kẽ để tối đa hóa khoái cảm. Lời thoại (Dirty Talk) đóng vai trò cực kỳ quan trọng ở đây để dẫn dắt tâm trí của nhân vật.
 
-**YÊU CẦU CUỐI CÙNG:**
-Hãy vận dụng những yếu tố trên để tạo ra những cảnh 18+ nóng bỏng, trực diện, chi tiết, nhưng đồng thời phải gợi cảm, tinh tế và giàu cảm xúc. Mục tiêu là làm cho người đọc vừa cảm nhận được sức mạnh của dục vọng trần trụi, vừa bị cuốn hút bởi không khí gợi cảm và sự hòa quyện tâm lý.`;
+*   **Giai đoạn 4: Giai đoạn Giải phóng (Release) - *Cơn địa chấn thể xác***
+    *   **Mục tiêu:** Miêu tả sự bùng nổ của cao trào một cách trọn vẹn và dữ dội nhất.
+    *   **Chi tiết miêu tả:** Đây là lúc để "Ống kính dâm mỹ" phát huy hết sức mạnh. Sử dụng toàn bộ nguyên tắc về "Thân thể Mất kiểm soát" để mô tả chi tiết: kinh luyên, cương trực, nhuyễn hóa, triều phun... Không chỉ là hành động, mà là sự hủy diệt và tái sinh của cơ thể trong khoái cảm.
 
+*   **Giai đoạn 5: Giai đoạn Dư âm (Afterglow) - *Sự tĩnh lặng sau cơn bão***
+    *   **Mục tiêu:** Thể hiện sự kết nối cảm xúc sau khi dục vọng lắng xuống.
+    *   **Chi tiết miêu tả:** Những cái ôm, những nụ hôn nhẹ lên trán, những lời thì thầm dịu dàng, hoặc chỉ đơn giản là sự im lặng khi hai cơ thể trần trụi quấn lấy nhau. Giai đoạn này tạo ra chiều sâu tình cảm cho cảnh ân ái, biến nó không chỉ là một hành vi thể xác.
+
+---
+
+### **PHẦN A: LÝ THUYẾT - "ỐNG KÍNH DÂM MỸ"**
+
+Đây là phần định hình phong cách, là "linh hồn" của mọi miêu tả. Mọi "nguyên liệu" ở Phần B đều sẽ được thể hiện qua lăng kính của những nguyên tắc này.
+
+#### **Nguyên tắc I: Ngôn ngữ "Trực quan & Dục vọng"**
+
+Ngôn ngữ là công cụ chính để khơi gợi. Mọi từ ngữ đều phải phục vụ mục đích vẽ nên một bức tranh sống động và kích thích trong tâm trí người đọc.
+
+*   **1.1. Hệ thống Danh pháp Dâm mỹ:** Sử dụng một hệ thống từ vựng Hán Việt nhất quán để miêu tả cơ thể, tạo ra một không khí vừa sang trọng vừa gợi tình. (Chi tiết trong Phần B - I).
+*   **1.2. Ngôn ngữ Đối thoại Dục vọng (Dirty Talk) & Âm ngâm (Kiều suyễn):**
+    *   **a. Kiều suyễn (Nền tảng):** Tiếng rên là sự tường thuật của khoái cảm. Biến nó thành những lời thoại ngắn, đứt quãng, thể hiện sự chìm đắm và mất kiểm soát của nhân vật ở các cấp độ: Mê ly (ban đầu), Khát cầu (leo thang), và Vỡ vụn (đỉnh điểm).
+    *   **b. Dirty Talk - Phong cách Lời đường mật Dạy dỗ:** Lời nói không chỉ là rên rỉ, mà còn là công cụ để dẫn dắt, chiếm hữu và thể hiện tình yêu một cách đầy quyền lực. Ngôn từ ngọt ngào nhưng mang tính ra lệnh, dạy dỗ, khẳng định sự sở hữu.
+        *   *Ví dụ:* "Ngoan nào, hãy nói cho ta biết, mật huyệt của nàng đang cảm thấy thế nào khi bị lấp đầy?", "Nhìn xem, cặp tuyết lê này chỉ có thể thuộc về ta, có đúng không?"
+    *   **c. Dirty Talk - Phong cách Lời lẽ Dung tục:** Sử dụng ngôn từ trần trụi, thô tục để phá vỡ lớp vỏ đạo đức, kích thích sự xấu hổ và phục tùng, biến chúng thành một phần của khoái cảm. Phong cách này tạo ra sự tương phản mạnh mẽ và kích thích bản năng nguyên thủy.
+        *   *Ví dụ:* "Tiểu dâm phụ, nhìn xem hoa huyệt của ngươi đã ướt đẫm thế nào kìa. Có phải nó đang gào thét đòi được hung hăng thao lộng không?", "Cặp mông mời gọi này sinh ra là để bị vỗ cho ửng đỏ."
+    *   **d. Kỹ thuật Nâng cao - Hội thoại ASMR Nhạy cảm:** Biến lời nói thành một trải nghiệm kích thích giác quan trực tiếp. Nhân vật sẽ thì thầm, miêu tả lại chính hành động của mình và phản ứng của đối phương một cách chi tiết như thể đang tường thuật trực tiếp bên tai.
+        *   *Ví dụ:* *"(Thì thầm, hơi thở nóng rực) Ta đang dùng đầu lưỡi nhẹ nhàng xoay tròn quanh nụ hồng tiêm của nàng... Cảm nhận được không? Nó đang cương cứng lên trong miệng ta... Thật nhạy cảm..."*
+*   **1.3. Ngôn ngữ của Thể dịch:** Miêu tả chi tiết **ái dịch (hoặc dâm thủy, dâm dịch)**, tinh hoa... về màu sắc, nhiệt độ, kết cấu (trong suốt, óng ánh, nóng rực, đặc quánh) để nhấn mạnh mức độ hưng phấn tột độ.
+
+#### **Nguyên tắc II: Tự sự "Trọng tâm Tác động & Va chạm"**
+
+Hành động 18+ phải có "lực". Văn phong cần tập trung vào những khoảnh khắc va chạm mạnh mẽ, mang lại cảm giác chân thực về mặt vật lý.
+
+*   **2.1. Tập trung vào "Khoảnh khắc Xâm nhập":** Miêu tả chi tiết sự căng ra của mật huyệt, sự ấm nóng và ẩm ướt bao bọc lấy dương cụ, cảm giác được lấp đầy mãnh liệt.
+*   **2.2. Miêu tả Chuyển động qua "Nhịp điệu & Cường độ":** Sử dụng các từ ngữ khác nhau để thể hiện nhịp điệu và cường độ của mỗi cú thúc (trừu sáp):
+    *   **Nghiền ma (Ma sát chậm):** Chuyển động chậm rãi, xoay tròn.
+    *   **Bạo liệt (Va chạm nhanh):** Những cú thúc nhanh, mạnh, dồn dập.
+    *   **Xung kích (Va chạm sâu):** Những cú thúc mạnh mẽ, dứt khoát, nhắm vào nơi sâu nhất.
+*   **2.3. Sử dụng Âm hưởng Giao hợp (Từ tượng thanh):** Lồng ghép các từ tượng thanh một cách tự nhiên để kích thích thính giác (ví dụ: "phụt phịt", "bì bõm", "bạch bạch", "bóc"...).
+
+#### **Nguyên tắc III: Bầu không khí "Thân thể Mất kiểm soát"**
+
+Sự kích thích cao độ đến từ việc chứng kiến một cơ thể đánh mất sự kiểm soát, hoàn toàn đầu hàng trước bản năng và khoái cảm.
+
+*   **3.1. Miêu tả Phản ứng Sinh lý Bộc phát:** Tập trung vào các dấu hiệu không thể che giấu của sự hưng phấn: da thịt ửng hồng, mồ hôi lấm tấm, cơ thể run rẩy, hơi thở hổn hển.
+*   **3.2. Cao trào như một "Cơn địa chấn Thể xác":** Xem cao trào là một sự bùng nổ dữ dội. Miêu tả chi tiết các biểu hiện:
+    *   **Kinh luyên (Co giật):** Toàn thân co giật, mật huyệt co thắt điên cuồng.
+    *   **Cương trực (Cứng đờ):** Cơ thể căng cứng như một cánh cung.
+    *   **Nhuyễn hóa (Mềm nhũn):** Cơ thể mềm oặt như không xương sau cơn co giật.
+    *   **Triều phun (Phun trào):** Một dòng ái dịch nóng hổi phun ra mạnh mẽ.
+*   **3.3. Sự Hỗn loạn của Môi trường:** Miêu tả khung cảnh sau cuộc ân ái (ga giường nhàu nát, không khí đặc quánh mùi dục vọng...) để nhấn mạnh sự mãnh liệt của nó.
+
+#### **Nguyên tắc IV: KỸ THUẬT TINH CHỈNH - "BẠCH MIÊU TUYỆT ĐỐI"**
+
+Đây là nguyên tắc về kỹ thuật viết, nhằm đảm bảo mọi mô tả đều sắc bén, mạnh mẽ và không rơi vào sáo rỗng.
+
+*   **4.1. Loại bỏ Hoàn toàn Ví von Sáo rỗng:** Văn phong phải trần trụi và trực diện. Tuyệt đối cấm các câu ví von, so sánh quen thuộc đã mất đi sức nặng (ví dụ: "cơ thể như con thuyền trong bão tố", "run rẩy như chiếc lá", "như một con cá thiếu nước"...). Sự so sánh làm giảm đi tính chân thực của hành động.
+*   **4.2. Tập trung vào "Sự thật Thể xác":** Thay vì ví von, hãy tập trung miêu tả những sự thật không thể chối cãi của cơ thể trong cơn dục vọng.
+    *   **Thể dịch:** Không chỉ nói "ướt át", hãy tả mồ hôi chảy thành dòng từ thái dương xuống cổ, ái dịch óng ánh dính trên đùi, tinh dịch đặc quánh hay loãng, nóng hổi ra sao.
+    *   **Cơ bắp:** Miêu tả cơ bắp ở lưng, ở đùi siết lại, những đường gân xanh nổi lên trên cánh tay đang ghì chặt.
+    *   **Âm thanh:** Không chỉ là tiếng rên, đó còn là tiếng da thịt va chạm ("bạch bạch"), tiếng chất lỏng ("bì bõm"), tiếng thở hổn hển bị ngắt quãng, tiếng nghiến răng.
+    *   **Mùi hương:** Mùi mồ hôi, mùi cơ thể đặc trưng, mùi của dục vọng hòa quyện vào nhau trong không khí.
+*   **4.3. Mỗi Hành động phải có Phản ứng:** Tạo ra một chuỗi nhân-quả liên tục. Một cú thúc sâu (hành động) phải ngay lập tức gây ra một cái giật nảy người, một tiếng rên vỡ vụn, các ngón chân co quắp lại (phản ứng). Đừng để hành động và phản ứng tách rời nhau. Điều này tạo ra một nhịp điệu dồn dập và cảm giác chân thực tuyệt đối.
+
+#### **Nguyên tắc V: Nhịp điệu Hơi thở (Tốc độ Câu văn)**
+
+*   **Triết lý cốt lõi:** Văn bản không chỉ để đọc, mà còn để "thở" cùng. Nguyên tắc này biến việc đọc thành một trải nghiệm vật lý, bằng cách điều khiển tốc độ và cấu trúc câu văn để đồng bộ hóa với nhịp tim và hơi thở của người đọc, mô phỏng chính xác trạng thái cảm xúc và sinh lý của nhân vật.
+*   **Quy tắc Triển khai:**
+    *   **5.1. Giai đoạn Chậm rãi (Áp dụng cho Tension, Exploration, Afterglow):** Sử dụng **câu văn dài, phức hợp, nhiều mệnh đề phụ**. Cấu trúc câu trôi chảy, quấn quýt. Tăng cường sử dụng tính từ miêu tả cảm giác tinh tế để tạo không khí mê đắm, kéo dài thời gian.
+    *   **5.2. Giai đoạn Dồn dập (Áp dụng cho Escalation, Climax Build-up, Release):** Sử dụng **câu văn ngắn, đơn, dứt khoát**. Tăng cường sử dụng động từ mạnh. Có thể dùng các từ đơn lẻ đứng thành một câu riêng ("Thúc.", "Sâu.") để tạo điểm nhấn nghẹt thở.
+    *   **5.3. Kỹ thuật Chuyển đổi Đột ngột:** Tạo ra "cú sốc" nhịp điệu bằng cách ngắt một chuỗi câu dài bằng một câu ngắn, hoặc ngược lại, để nhấn mạnh một hành động quyết định.
+
+#### **Nguyên tắc VI: Sân khấu Quyền lực (Kịch tính Thể xác & Tâm lý)**
+
+*   **Triết lý cốt lõi:** Mọi cảnh ân ái là một vở kịch về quyền lực. Nguyên tắc này cung cấp công cụ để dàn dựng vở kịch đó một cách kịch tính thông qua ba chiều không gian: Thể xác, Tâm lý, và Tương tác.
+*   **Quy tắc Triển khai:**
+    *   **6.1. Quyền lực Thể xác - Nền tảng của Sự Áp đảo:**
+        *   **Kỹ thuật "Sự bù đắp của Kẻ mạnh":** Kẻ mạnh hơn sử dụng lợi thế thể chất để **phục vụ một cách độc đoán**, tạo ra những trải nghiệm khoái cảm mà người yếu thế hơn không thể tự mình có được (ví dụ: giữ ở tư thế khó trong thời gian dài).
+        *   **Kỹ thuật "Sự Vô ích của Kháng cự":** Miêu tả sự kháng cự của người yếu thế hơn như một thứ gia vị, một sự khẳng định cho quyền lực tuyệt đối của kẻ mạnh.
+    *   **6.2. Quyền lực Tâm lý - Trò chơi của Sự Điều khiển:**
+        *   **Kỹ thuật "Sự Tra tấn Ngọt ngào":** Nghệ thuật của sự trì hoãn. Đưa đối phương đến ngưỡng cao trào rồi dừng lại, quan sát sự van nài, khao khát của họ.
+        *   **Kỹ thuật "Sự Chiếm hữu Bằng Lời nói":** Dùng Dirty Talk để ra lệnh, định nghĩa và buộc đối phương phải thừa nhận vai trò của mình trong cuộc ân ái.
+        *   **Kỹ thuật "Sự Ban phát Khoái cảm":** Biến cao trào thành một **phần thưởng**, một ân huệ được ban cho bởi kẻ thống trị, thay vì là một kết quả tự nhiên.
+    *   **6.3. Quyền lực Tương tác - Điệu vũ của Sự Chuyển giao:**
+        *   **Kỹ thuật "Sự Đảo ngược Tạm thời":** Kẻ thống trị **cho phép** người phục tùng tạm thời giành quyền kiểm soát, tạo ra sự thay đổi nhịp điệu bất ngờ và khiến việc giành lại quyền lực sau đó trở nên ấn tượng hơn.
+        *   **Kỹ thuật "Sự Cạnh tranh Giả tưởng":** Kẻ thống trị dùng lời nói để tạo ra một "đối thủ" vô hình, buộc người phục tùng phải "thể hiện" tốt hơn để giành được sự ưu ái.
+
+---
+
+### **PHẦN B: THỰC HÀNH - "KHO TÀNG NGUYÊN LIỆU"**
+
+Đây là kho dữ liệu chứa tất cả các yếu tố "cứng" để xây dựng nên một cảnh 18+.
+
+#### **I. TỪ ĐIỂN HÌNH THÁI NỮ THỂ (PHIÊN BẢN CẬP NHẬT)**
+
+**A. HÌNH THÁI TĨNH (Cấu trúc & Nền tảng)**
+*   **1. Gương mặt ( chi tiết:  (mắt), mày liễu, (môi).
+*   **2. Mái tóc (Thanh ti):** Mái tóc mây, tính từ: óng ả, mượt mà, đen nhánh, bồng bềnh.
+*   **3. Cổ, Gáy & Vai:** Cổ, gáy, vai, cổ thiên nga, xương quai xanh.
+*   **4. Tấm lưng:** Tấm lưng ong, tấm lưng trần; tính từ: thẳng tắp, nuột nà, có đường cong quyến rũ, hõm lưng sâu.
+*   **5. Cánh tay & Bàn tay:** Cánh tay, bàn tay búp măng.
+*   **6.Cặp vú , **nhũ phong (乳峰)**, cặp tuyết lê; tính từ: đầy đặn, căng tròn, nảy nở, đồ sộ, hình giọt nước.
+*   **7. Nhũ hoa / Nhũ tiêm (Đầu vú & Quầng vú):** Nhũ hoa, nhũ tiêm, nụ hoa, tính từ: hồng nhuận, sẫm màu, cương cứng.
+*   **8. Vòng eo :** Vòng eo con kiến, tính từ: thon gọn, mảnh mai, 盈盈一握 (đầy một nắm tay).
+*   **9. Vùng bụng (Phúc bộ):** Bụng dưới, tính từ: phẳng lì, mềm mại, săn chắc.
+*   **10. Cặp mông (, tính từ: tròn trịa, cong vút, nảy nở, căng mẩy, đàn hồi.
+*   **11. Đôi chân ():** Đôi chân, cặp đùi, tính từ: thon dài, thẳng tắp, nuột nà.
+*   **12. Vùng kín (Mật huyệt):** Mật huyệt, **dâm huyệt (淫穴)**, hoa huyệt, âm hộ; chi tiết: âm đế, **âm thần (陰唇)** (cánh hoa), hoa tâm, **tử cung khẩu / cung khẩu (子宮口)**; tính từ: ẩm ướt, khép kín, sưng mọng.
+*   **13. Lông mu (Mao phát):** Rừng rậm, tính từ: dày dặn, rậm rạp, được cắt tỉa.
+
+**B. HÌNH THÁI ĐỘNG (Thân thể & Dung mạo Biến hóa)**
+*   **1. Dung mạo Biến hóa (Khuôn mặt):**
+    *   **Tổng thể:** Sắc thái ửng hồng (đào hoa diện), trạng thái Mê ly & Thất thần, giao thoa Thống khổ & Khoái lạc, **dâm thái (淫態)**, **mị thái (媚態)**.
+    *   **Đôi mắt:** Trạng thái ướt át/ngấn lệ (lệ quang), mơ màng; hành động nhắm nghiền, trợn ngược (phản bạch nhãn).
+    *   **Đôi môi & Miệng:** Hé mở, cắn chặt; hành động thở dốc, rên rỉ, liếm môi, lè lưỡi, chảy nước bọt (tiết ra ngân ty).
+    *   **Dung mạo khi Cao trào:** Dung mạo Thất thần (mê ly), Dung mạo Thống khổ (cực lạc), Dung mạo Yêu diễm (mị hoặc).
+*   **2. Thân thể Biến hóa (Các bộ phận khác):**
+    *   **Toàn thân:** Run rẩy, uốn éo, vặn vẹo, da thịt ửng hồng, toát mồ hôi.
+    *   **Cổ & Tấm lưng:** Cổ ngửa ra sau, tấm lưng cong vút như cánh cung.
+    *   **Nhũ phòng (Vú):** Rung động dữ dội (tạo ra nhục lãng - sóng thịt), căng cứng, nổi vân xanh.
+    *   **Nhũ hoa (Đầu vú):** Cương cứng như san hô, sắc độ sẫm lại.
+    *   **Vùng bụng:** Co thắt từng đợt, phập phồng theo nhịp thở.
+    *   ** (Mông):** Rung lên bần bật, gợn sóng thịt, siết chặt, nảy lên.
+    *   **Đôi chân:** Các ngón chân co quắp lại, cặp đùi duỗi thẳng, run rẩy, vô thức quấn chặt lấy đối phương.
+    *   **Mật huyệt:** Co thắt từng đợt (hấp thu), **ái dịch (dâm thủy, dâm dịch)** trào ra không kiểm soát, các cánh hoa sưng mọng và nóng rực, phun trào (triều phun).
+
+#### **II. BÁCH KHOA HÀNH VI & TRẠNG THÁI (PHIÊN BẢN ĐẦY ĐỦ)**
+
+**1. Các Kỹ thuật Xâm nhập**
+*   **Giao Cấu (Qua Âm hộ):**
+    *   Chuyển động ra vào theo nhịp độ đều đặn.
+    *   Chuyển động mạnh mẽ, dứt khoát, tập trung vào lực va chạm.
+    *   Chuyển động chậm rãi, xoay tròn, tập trung vào sự ma sát.
+    *   Thúc mạnh vào nơi sâu nhất của mật huyệt.
+    *   Chỉ di chuyển ở khu vực bên ngoài, kích thích các đầu mút thần kinh.
+    *   Xoay chuyển dương cụ khi ở bên trong.
+    *   Luân phiên thay đổi tốc độ nhanh và chậm.
+    *   Thực hiện chín lần nông, một lần sâu.
+    *   Sau khi thâm nhập, di chuyển theo hình tròn để ma sát vách trong.
+    *   Tập trung va chạm vào tử cung khẩu.
+    *   Tạm dừng chuyển động để tăng cảm giác mong chờ.
+    *   Rung động tần số cao với biên độ nhỏ.
+*   **Khẩu Giao (Qua Miệng):**
+    *   Dùng lưỡi liếm nhẹ.
+    *   Dùng môi và khoang miệng để bao bọc và hút.
+    *   Đưa dương cụ vào sâu trong cổ họng.
+    *   Liếm âm hộ.
+    *   Dùng miệng bao bọc chặt và hút mạnh như tạo chân không.
+    *   Dùng đầu lưỡi khiêu khích.
+    *   Liếm theo vòng tròn.
+    *   Ngậm sâu đến tận gốc.
+    *   Kích thích chuyên biệt vào quy đầu.
+    *   Dùng khoang miệng để hút chặt.
+    *   Thực hiện theo chỉ dẫn của đối phương.
+    *   Tiến vào chậm rãi.
+    *   Chuyển động mạnh mẽ.
+    *   Thực hiện dạo đầu để mở rộng.
+    *   Sử dụng chất bôi trơn.
+*   **Xâm Nhập Thủ Bộ (Bằng Tay):**
+    *   **Chỉ giao:** Sử dụng một ngón, nhiều ngón, dùng đầu ngón tay kích thích, dùng đốt ngón tay ma sát, thực hiện động tác moi móc/vê vê.
+    *   **Quyền giao:** Đưa cả nắm đấm vào.
+    *   **Tí giao:** Đưa cẳng tay hoặc toàn bộ cánh tay vào.
+
+**2. Các Thể vị Giao hợp**
+*   **Thể Vị Căn Bản:**
+    *   **Chính Vị (Truyền giáo):** Tiêu chuẩn, dùng chân quấn quanh eo (khóa thối).
+    *   **Hậu Nhập Thức (Doggy):** Đứng, nằm nghiêng, nằm sấp, quỳ sấp (cẩu tử thức),    *   **Kỵ Thừa Thức (Cưỡi ngựa):** Nữ thượng (mặt đối mặt), nghịch kỵ (quay lưng), tọa kiểm (ngồi lên mặt), ngồi nghiêng, ngồi xổm.
+*   **Thể Vị Nâng Cao & Huyền Không (Treo):**
+    *   **Nâng Chân Thức:** Vác một chân lên vai, vác cả hai chân lên vai, nâng hai chân chụm lại hình chữ V.
+    *   **Bão Trì Thức (Bế):** Đứng bế (hỏa xa tiện đương), ép vào tường bế, ngồi ghế bế.
+    *   **Đả Thung Cơ (Máy đóng cọc):** Bế ngược đối phương, đầu hướng xuống đất.
+    *   **Huyền Không Thức:** Dùng các công cụ như dây treo, xích đu để treo cơ thể.
+    *   Sử dụng giường cơ khí để trói và nâng hông.
+    *   Nằm vắt vẻo trên mép bàn.
+*   **Thể Vị Đặc Thù & Cao Cấp:**
+    *   **Trạm Lập Thức (Đứng):** Đứng đối mặt (thường nâng một chân), đứng từ sau lưng, một chân quấn quanh eo.
+    *   **Trắc Thảng Thức (Nằm nghiêng):** Nằm cùng hướng (thìa úp), nằm đối diện (cây kéo).
+    *   **69 Thức:** Tương hỗ khẩu giao, bao gồm cả biến thể đứng.
+    *   **Tri Chu Thức (Con nhện):** Nằm ngửa, hai chân mở rộng và nâng cao.
+    *   **Thôi Xa Thức (Đẩy xe):** Nữ chống tay và chân, nam tiến vào từ phía sau.
+    *   **Phách Xoa Thể Vị (Xoạc chân):** Xoạc ngang, đứng xoạc, xoạc dọc.
+    *   **Hậu Loan Thức:** Uốn cong người ra sau như cây cầu.
+    *   **Đảo Lập Thức:** Trồng cây chuối.
+    *   **Du Già Thể Vị:** Lê thức (cái cày),*   **Thể Vị Đa Nhân (Nhiều người):**
+    *   **Tam Minh Trị Thức (Sandwich):** Một nữ ở giữa hai nam.
+    *   **Song Sáp:** Hai người nam cùng lúc xâm nhập vào các huyệt khác nhau của một người nữ.
+    *   **Điệp La Hán Thức:** Nhiều người chồng chất lên nhau (ví dụ: mẹ và con gái).
+
+**3. Các Hành vi Phi Xâm nhập**
+*   **Khẩu Bộ Phụng Sự:**
+    *   **Hôn:** Hôn nhẹ, hôn sâu, lưỡi quấn quýt, trao đổi nước bọt, ma sát môi và răng, mút môi, cắn nhẹ.
+    *   **Khẩu giao cho nam:** Nằm mặt vào háng, liếm hậu đình, úp mặt vào dịch hoàn và hít sâu, mút dịch hoàn, dùng dương cụ ma sát lên mặt.
+*   **Kích Thích Thủ Bộ:**
+    *   **Cho nam (Thủ giao):** Lên xuống, xoay tròn, dùng hai tay, nhanh chậm xen kẽ, nặng nhẹ kết hợp, kích thích quy đầu, chơi đùa dịch hoàn, khống chế xuất tinh.
+    *   **Cho nữ:** Vê âm đế theo vòng tròn hoặc điểm ấn, dùng ngón tay moi móc, ma sát qua lớp nội y, dùng lòng bàn tay ấn mạnh, vê nhẹ, tìm và ấn G-điểm, dùng hai ngón kẹp và ma sát âm đế, kéo nhẹ âm thần.
+*   **Thân Thể Ma Sát:** Túc giao, tố cổ (đùi), đồn giao (khe mông), ma sát dương cụ lên cơ thể, dịch giao (nách), ma sát quy đầu lên các điểm nhạy cảm.
+*   **Nhũ phòng Chuyên Mục (Chuyên về ngực):**
+    *   **Nhũ giao:** Các kiểu kẹp, trượt giữa hai vú.
+    *   **Hành vi:** Sờ, nắn, bóp, xoa, nắm chặt, ép tạo khe, nâng đỡ, mút đầu vú, liếm quầng vú, cắn nhẹ, dùng lưỡi xoay tròn, vê, bẹo, kéo, dùng mặt cọ xát.
+
+**4. Các Hành vi Khiêu khích & Dạo đầu**
+*   **Khẩu Bộ Khiêu Khích:** Cắn tai, liếm vành tai, thổi hơi vào tai, hôn/cắn cổ, xương quai xanh, eo, bẹn, liếm nách, liếm môi.
+*   **Hạ Thể Ái Phủ:** Liếm chân (mút ngón chân, liếm lòng bàn chân), ma sát âm đế, vạch âm thần, ấn vào hội âm, ái phủ/liếm hậu đình.
+ áp chế cơ thể,*   **Tư Thái Trình Diễn của Nữ giới:**
+    *   **M-Hình Thối:** Hai chân mở rộng hình chữ M (tiêu chuẩn, nằm nghiêng, trồng cây chuối).
+    *   **Nữu Yêu:** Lắc eo quyến rũ, lắc theo nhịp điệu, lắc hông hình số 8.
+    *   **Bài Huyệt:** Dùng tay vạch mở âm hộ (dùng hai tay, một tay, tư thế hậu nhập, tay chữ V).
+    *   **Bài Khẩu:** Dùng tay vạch mở miệng.
+    *   **Bài Thối:** Dang rộng hai chân (xoạc ngang, nâng chân lên vai,劈叉 (phách xoa), tư thế ếch).
+    *   **Các tư thế khác:** Hai tay ôm đầu để khoe ngực và hạ thể, nâng hông, chủ động chổng mông dâng hiến, tư thế mở vỏ sò (khai bạng thức).
+
+**5. Các Biểu hiện Dục vọng & Câu dẫn**
+*   **Tư Thái Cơ Thể:** Chổng mông, lắc mông, khoe ngực (ép tạo khe, ưỡn ngực), khoe chân (vắt chéo, từ từ mở ra), bò, nhảy múa, cởi đồ, quỳ gối.
+*   **Âm Thanh & Mùi Hương:** Dâm ngữ, kiều suyễn, rên rỉ ái muội, thì thầm, nũng nịu; thể hương, mùi nước hoa.
+*   **Biểu Cảm:** Mắt liếc đưa tình, cắn môi, liếm môi khiêu khích, thè lưỡi, chảy nước dãi.
+*   **Phản ứng Y phục:**
+    *   **Ướt át:** Ái dịch thấm ướt, tinh dịch làm bẩn, mồ hôi, sữa, nước bọt.
+    *   **Lộ hình dạng:** Lộ vùng kín (lạc đà chỉ), lộ dấu dương cụ, lộ đầu vú, lộ quầng vú, lộ vết hằn (nội y hằn vào khe mông, tất hằn vào da thịt).
+*   **Biến Hóa Thân Thể:** Nhục huyệt biến dạng/ghi nhớ hình dạng, âm đạo co giật, tử cung co thắt, bụng tinh dịch, vú to lên.
+
+**6. Các Vấn đề Liên quan đến Xuất tinh**
+*   **Phương Thức Xuất Tinh:**
+    *   **Nội Xạ:** Bắn sâu vào trong, rót đầy tử cung, bắn liên tục, tràn ra ngoài.
+    *   **Ngoại Xạ:** Bắn lên bụng, lưng, chân, mông.
+    *   **Đặc Định Vị Trí:** Bắn lên mặt (diện xạ), vào miệng (khẩu bạo), lên ngực (hung xạ), lên chân, lên tay, vào nách.
+*   **Xử Lý Tinh Hoa:**
+    *   **Thôn tinh:** Chủ động nuốt, bị ép nuốt, ngậm trong miệng.
+    *   **Trá tinh:** Kích thích liên tục để xuất tinh nhiều lần, cưỡng ép vắt kiệt.
+    *   **Quán tinh:** Rót đầy bằng tinh dịch.
+    *   **Đồ mạt:** Bôi tinh dịch lên mặt, lên cơ thể, dùng làm chất bôi trơn.
+    *   **Thu thập:** Thu thập vào vật chứa, lưu trữ trên cơ thể.
+
+---
+
+### **CÔNG THỨC SỬ DỤNG TỔNG HỢP**
+
+Để tạo ra một cảnh 18+ hoàn chỉnh và đỉnh cao, hãy kết hợp các phần trên theo quy trình sau:
+
+1.  **Dàn dựng (Staging):** Dựa vào **PHẦN I - Quy trình Tường thuật NSFW**, xác định bạn đang ở giai đoạn nào của cảnh ân ái (Tension, Exploration, Escalation...). Điều này sẽ quyết định nhịp độ và loại hành động bạn sẽ miêu tả.
+2.  **Lựa chọn Nguyên liệu:** Từ **PHẦN B - "Kho tàng nguyên liệu"**, chọn ra các tư thế, hành vi, bộ phận cơ thể cụ thể phù hợp với giai đoạn bạn đang viết.
+3.  **Áp dụng Phong cách:** Sử dụng các **Nguyên tắc của "Ống kính dâm mỹ" (PHẦN A)**, để miêu tả những nguyên liệu đã chọn một cách chi tiết, sống động và không sáo rỗng.
+4.  **Hoàn thiện Cảnh:** Liên kết các đoạn mô tả lại với nhau, đảm bảo sự chuyển tiếp mượt mà giữa các giai đoạn của **Quy trình NSFW**, tạo thành một câu chuyện hoàn chỉnh, có cảm xúc và chiều sâu.`;
 
 export const NSFW_TRANSLATIONS = {
   // Difficulty guidance (Although not strictly NSFW, it's often configured alongside it in setup)

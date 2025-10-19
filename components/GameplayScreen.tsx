@@ -1,19 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useRef, useEffect, useCallback, useMemo, useLayoutEffect, useState } from 'react';
 import { GameScreen, GameMessage, StyleSettings, StyleSettingProperty, GameLocation, KnowledgeBase, AiChoice, PlayerActionInputType, ResponseLength } from './../types/index';
 import { VIETNAMESE } from './../constants';
@@ -49,7 +33,7 @@ import Spinner from './ui/Spinner'; // Import Spinner
 
 export const GameplayScreen: React.FC = () => {
     const game = useGame(); // Get all props from context
-    const combat = useCombat(); // Get combat context
+    const combat = useCombat(); // NEW: Get combat context
     const storyLogRef = useRef<HTMLDivElement>(null);
 
     // Use custom hooks for UI state not needed globally
@@ -344,26 +328,47 @@ export const GameplayScreen: React.FC = () => {
             </OffCanvasPanel>
 
             <OffCanvasPanel isOpen={isCharPanelOpen} onClose={() => setIsCharPanelOpen(false)} title={VIETNAMESE.characterPanelTitle} position="right">
-                <CharacterSidePanel knowledgeBase={game.knowledgeBase} onItemClick={(item) => game.openEntityModal('item', item)} onSkillClick={(skill) => game.openEntityModal('skill', skill)} onPlayerAvatarUploadRequest={game.onUpdatePlayerAvatar} isUploadingPlayerAvatar={game.isUploadingAvatar} />
+                <CharacterSidePanel 
+                    knowledgeBase={game.knowledgeBase} 
+                    onItemClick={(item) => game.openEntityModal('item', item)} 
+                    onSkillClick={(skill) => game.openEntityModal('skill', skill)} 
+                    onPlayerAvatarUploadRequest={game.onUpdatePlayerAvatar} 
+                    isUploadingPlayerAvatar={game.isUploadingAvatar} 
+                />
             </OffCanvasPanel>
              <OffCanvasPanel isOpen={isQuestsPanelOpen} onClose={() => setIsQuestsPanelOpen(false)} title={VIETNAMESE.questsPanelTitle} position="right">
-                <QuestsSidePanel quests={game.knowledgeBase.allQuests} onQuestClick={(quest) => game.openEntityModal('quest', quest)} onQuestEditClick={(quest) => game.openEntityModal('quest', quest, true)}/>
+                <QuestsSidePanel 
+                    quests={game.knowledgeBase.allQuests} 
+                    onQuestClick={(quest) => game.openEntityModal('quest', quest)}
+                    onQuestEditClick={(quest) => game.openEntityModal('quest', quest, true)}
+                />
             </OffCanvasPanel>
              <OffCanvasPanel isOpen={isWorldPanelOpen} onClose={() => setIsWorldPanelOpen(false)} title={VIETNAMESE.worldPanelTitle} position="right">
-                {/* FIX: Pass all required on...Click and on...EditClick props to WorldSidePanel. */}
                 <WorldSidePanel 
                     knowledgeBase={game.knowledgeBase}
-                    onNpcClick={(npc) => game.openEntityModal('npc', npc)}
+                    onNpcClick={(npc) => {
+                        game.openEntityModal('npc', npc);
+                    }}
                     onNpcEditClick={(npc) => game.openEntityModal('npc', npc, true)}
-                    onYeuThuClick={(yeuThu) => game.openEntityModal('yeuThu', yeuThu)}
+                    onYeuThuClick={(yeuThu) => {
+                        game.openEntityModal('yeuThu', yeuThu);
+                    }}
                     onYeuThuEditClick={(yeuThu) => game.openEntityModal('yeuThu', yeuThu, true)}
-                    onLocationClick={(location) => game.openEntityModal('location', location)}
+                    onLocationClick={(location) => {
+                        game.openEntityModal('location', location);
+                    }}
                     onLocationEditClick={(location) => game.openEntityModal('location', location, true)}
-                    onLoreClick={(lore) => game.openEntityModal('lore', lore)}
+                    onLoreClick={(lore) => {
+                        game.openEntityModal('lore', lore);
+                    }}
                     onLoreEditClick={(lore) => game.openEntityModal('lore', lore, true)}
-                    onFactionClick={(faction) => game.openEntityModal('faction', faction)}
+                    onFactionClick={(faction) => {
+                        game.openEntityModal('faction', faction);
+                    }}
                     onFactionEditClick={(faction) => game.openEntityModal('faction', faction, true)}
-                    onCompanionClick={(companion) => game.openEntityModal('companion', companion)}
+                    onCompanionClick={(companion) => {
+                        game.openEntityModal('companion', companion);
+                    }}
                     onCompanionEditClick={(companion) => game.openEntityModal('companion', companion, true)}
                 />
             </OffCanvasPanel>

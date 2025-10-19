@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Button from './Button';
 import { VIETNAMESE } from '@/constants';
 
@@ -11,6 +11,7 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   const [isRendered, setIsRendered] = useState(isOpen);
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -26,10 +27,19 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
     };
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
+
+      // Accessibility fix: Programmatically move focus into the modal.
+      // A timeout is crucial here to ensure this focus command runs *after*
+      // the event loop has processed other potential focus traps from underlying components.
+      const timer = setTimeout(() => {
+        titleRef.current?.focus();
+      }, 100);
+
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+        clearTimeout(timer);
+      };
     }
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
   }, [isOpen, onClose]);
 
   const handleAnimationEnd = () => {
@@ -45,7 +55,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   return (
     <div role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div 
-            className="fixed inset-0 bg-black bg-opacity-75 z-50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+            className="fixed inset-0 bg-black bg-opacity-75 z-[100] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
             data-state={isOpen ? 'open' : 'closed'}
             onClick={onClose}
             onAnimationEnd={handleAnimationEnd}
@@ -53,11 +63,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
         <div
             tabIndex={-1}
             data-state={isOpen ? 'open' : 'closed'}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] flex flex-col text-gray-100 z-50 focus:outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] flex flex-col text-gray-100 z-[100] focus:outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]"
             onAnimationEnd={handleAnimationEnd}
         >
           <div className="flex justify-between items-center mb-4 border-b border-gray-700 pb-3 flex-shrink-0">
-            <h2 id="modal-title" className="text-2xl font-semibold text-indigo-400">{title}</h2>
+            <h2 id="modal-title" ref={titleRef} tabIndex={-1} className="text-2xl font-semibold text-indigo-400 focus:outline-none">{title}</h2>
             <Button 
               variant="ghost" 
               size="sm" 
