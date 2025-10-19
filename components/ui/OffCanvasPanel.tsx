@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Button from './Button';
 import { VIETNAMESE } from '@/constants';
 
@@ -18,26 +18,70 @@ const OffCanvasPanel: React.FC<OffCanvasPanelProps> = ({
   position = 'right' 
 }) => {
   const [isRendered, setIsRendered] = useState(isOpen);
+  const panelContentRef = useRef<HTMLDivElement>(null);
+  const triggerElementRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (isOpen) {
       setIsRendered(true);
+      // Store the element that had focus before the panel opened
+      triggerElementRef.current = document.activeElement as HTMLElement;
+      // Hide main app content from screen readers
+      document.getElementById('root')?.setAttribute('aria-hidden', 'true');
+    } else {
+       // Restore focus to the trigger element when closing
+       triggerElementRef.current?.focus();
+       // Un-hide main app content
+       document.getElementById('root')?.setAttribute('aria-hidden', 'false');
     }
   }, [isOpen]);
 
   useEffect(() => {
+    if (!isRendered) return;
+
+    const panelElement = panelContentRef.current;
+    if (!panelElement) return;
+    
+    // Focus the panel itself. A timeout is needed.
+    const timer = setTimeout(() => {
+      panelElement.focus();
+    }, 100);
+
     const handleKeyDown = (event: KeyboardEvent) => {
+      // Close on Escape
       if (event.key === 'Escape') {
         onClose();
       }
+
+      // Focus trapping logic
+      if (event.key === 'Tab') {
+        const focusableElements = panelElement.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (event.shiftKey) { // Shift + Tab
+          if (document.activeElement === firstElement) {
+            lastElement?.focus();
+            event.preventDefault();
+          }
+        } else { // Tab
+          if (document.activeElement === lastElement) {
+            firstElement?.focus();
+            event.preventDefault();
+          }
+        }
+      }
     };
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-    }
+
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
+      clearTimeout(timer);
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isRendered, onClose]);
   
   const handleAnimationEnd = () => {
     if (!isOpen) {
@@ -60,6 +104,8 @@ const OffCanvasPanel: React.FC<OffCanvasPanelProps> = ({
             onAnimationEnd={handleAnimationEnd}
         />
         <div
+          ref={panelContentRef}
+          tabIndex={-1}
           data-position={position}
           data-state={isOpen ? 'open' : 'closed'}
           onAnimationEnd={handleAnimationEnd}
