@@ -304,12 +304,12 @@ const GameSetupContent = ({ setCurrentScreen, onSetupComplete }: GameSetupScreen
 
         <div className="max-h-[calc(100vh-320px)] overflow-y-auto custom-scrollbar pr-2 pb-4 -mr-2">
           {activeTab === 'aiAssist' && (
-              <div id="panel-aiAssist" role="tabpanel" tabIndex={0} aria-labelledby="tab-aiAssist">
+              <div id="panel-aiAssist" role="tabpanel" aria-labelledby="tab-aiAssist">
                   <AIAssistTab setIsArchitectModalOpen={setIsArchitectModalOpen} />
               </div>
           )}
           {activeTab === 'characterStory' && (
-              <div id="panel-characterStory" role="tabpanel" tabIndex={0} aria-labelledby="tab-characterStory">
+              <div id="panel-characterStory" role="tabpanel" aria-labelledby="tab-characterStory">
                   <CharacterStoryTab 
                     playerUploadedAvatarData={playerUploadedAvatarData}
                     setPlayerUploadedAvatarData={setPlayerUploadedAvatarData}
@@ -317,12 +317,12 @@ const GameSetupContent = ({ setCurrentScreen, onSetupComplete }: GameSetupScreen
               </div>
           )}
           {activeTab === 'worldSettings' && (
-              <div id="panel-worldSettings" role="tabpanel" tabIndex={0} aria-labelledby="tab-worldSettings">
+              <div id="panel-worldSettings" role="tabpanel" aria-labelledby="tab-worldSettings">
                   <WorldSettingsTab />
               </div>
           )}
           {activeTab === 'startingElements' && (
-              <div id="panel-startingElements" role="tabpanel" tabIndex={0} aria-labelledby="tab-startingElements">
+              <div id="panel-startingElements" role="tabpanel" aria-labelledby="tab-startingElements">
                   <StartingElementsTab
                     openSections={openSections}
                     toggleSection={toggleSection}

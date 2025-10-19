@@ -114,22 +114,23 @@ const CharacterSidePanel: React.FC<CharacterSidePanelProps> = React.memo(({
     !specificSkillTypes.includes(s.skillType)
   );
 
-  const activeTabStyle = "whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm border-indigo-500 text-indigo-400";
-  const inactiveTabStyle = "whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-500";
+  const baseTabStyle = "whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 rounded-t-sm";
+  const activeTabStyle = "border-indigo-500 text-indigo-400";
+  const inactiveTabStyle = "border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-500";
 
   return (
     <div className="flex flex-col h-full"> 
       {isPlayerRestricted && master && <MasterPanel master={master} />}
       
       <div className="border-b border-gray-700 flex-shrink-0">
-        <nav className="-mb-px flex space-x-4" aria-label="Tabs">
-          <button onClick={() => setActiveTab('info')} className={activeTab === 'info' ? activeTabStyle : inactiveTabStyle}>
+        <nav className="-mb-px flex space-x-4" aria-label="Tabs" role="tablist">
+          <button id="character-tab-info" role="tab" aria-controls="character-panel-info" aria-selected={activeTab === 'info'} onClick={() => setActiveTab('info')} className={`${baseTabStyle} ${activeTab === 'info' ? activeTabStyle : inactiveTabStyle}`}>
             Thông Tin
           </button>
-          <button onClick={() => setActiveTab('inventory')} className={activeTab === 'inventory' ? activeTabStyle : inactiveTabStyle}>
+          <button id="character-tab-inventory" role="tab" aria-controls="character-panel-inventory" aria-selected={activeTab === 'inventory'} onClick={() => setActiveTab('inventory')} className={`${baseTabStyle} ${activeTab === 'inventory' ? activeTabStyle : inactiveTabStyle}`}>
             Túi Đồ
           </button>
-          <button onClick={() => setActiveTab('skills')} className={activeTab === 'skills' ? activeTabStyle : inactiveTabStyle}>
+          <button id="character-tab-skills" role="tab" aria-controls="character-panel-skills" aria-selected={activeTab === 'skills'} onClick={() => setActiveTab('skills')} className={`${baseTabStyle} ${activeTab === 'skills' ? activeTabStyle : inactiveTabStyle}`}>
             Kỹ Năng
           </button>
         </nav>
@@ -137,7 +138,7 @@ const CharacterSidePanel: React.FC<CharacterSidePanelProps> = React.memo(({
       
       <div className="flex-grow overflow-y-auto custom-scrollbar pt-4 space-y-4">
         {activeTab === 'info' && (
-          <div>
+          <div id="character-panel-info" role="tabpanel" tabIndex={0} aria-labelledby="character-tab-info">
             {knowledgeBase.playerStats && (
               <PlayerStatsWithEquipment 
                 personId={'player'}
@@ -162,13 +163,13 @@ const CharacterSidePanel: React.FC<CharacterSidePanelProps> = React.memo(({
         )}
 
         {activeTab === 'inventory' && (
-          <div>
+          <div id="character-panel-inventory" role="tabpanel" tabIndex={0} aria-labelledby="character-tab-inventory">
             <InventoryPanel items={displayableInventory} onItemClick={onItemClick} onItemEditClick={(item) => openEntityModal('item', item, true)} />
           </div>
         )}
 
         {activeTab === 'skills' && (
-          <div className="space-y-4">
+          <div id="character-panel-skills" role="tabpanel" tabIndex={0} aria-labelledby="character-tab-skills" className="space-y-4">
             <SkillList title="Công Pháp Tu Luyện" skills={congPhapSkills} onSkillClick={onSkillClick} onSkillEditClick={(skill) => openEntityModal('skill', skill, true)} />
             <SkillList title="Linh Kĩ" skills={linhKiSkills} onSkillClick={onSkillClick} onSkillEditClick={(skill) => openEntityModal('skill', skill, true)} />
             <SkillList title="Thần Thông" skills={thanThongSkills} onSkillClick={onSkillClick} onSkillEditClick={(skill) => openEntityModal('skill', skill, true)} />

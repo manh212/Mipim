@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Quest } from '@/types/index';
 import { VIETNAMESE } from '@/constants';
@@ -59,6 +58,11 @@ const QuestsDisplayPanel: React.FC<QuestsDisplayPanelProps> = React.memo(({ ques
       </ul>
     );
   };
+  
+  const baseTabStyle = "py-2 px-3 sm:px-4 text-xs sm:text-sm font-medium flex-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 rounded-t-sm";
+  const activeTabStyle = "border-b-2 border-indigo-500 text-indigo-400";
+  const inactiveTabStyle = "text-gray-400 hover:text-indigo-300";
+
 
   return (
     <div className="h-full flex flex-col">
@@ -68,12 +72,12 @@ const QuestsDisplayPanel: React.FC<QuestsDisplayPanelProps> = React.memo(({ ques
             key={tab}
             id={`quest-tab-${tab}`}
             role="tab"
-            aria-controls="quest-panel"
+            aria-controls="quest-panel-content"
             aria-selected={activeTab === tab}
-            className={`py-2 px-3 sm:px-4 text-xs sm:text-sm font-medium flex-1 ${
+            className={`${baseTabStyle} ${
               activeTab === tab
-                ? 'border-b-2 border-indigo-500 text-indigo-400'
-                : 'text-gray-400 hover:text-indigo-300'
+                ? activeTabStyle
+                : inactiveTabStyle
             }`}
             onClick={() => setActiveTab(tab)}
           >
@@ -81,7 +85,7 @@ const QuestsDisplayPanel: React.FC<QuestsDisplayPanelProps> = React.memo(({ ques
           </button>
         ))}
       </div>
-      <div id="quest-panel" role="tabpanel" tabIndex={0} aria-labelledby={`quest-tab-${activeTab}`} className="flex-grow overflow-y-auto custom-scrollbar">
+      <div id="quest-panel-content" role="tabpanel" tabIndex={0} aria-labelledby={`quest-tab-${activeTab}`} className="flex-grow overflow-y-auto custom-scrollbar">
         {renderQuestList(filteredQuests)}
       </div>
     </div>
